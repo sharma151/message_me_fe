@@ -1,0 +1,14 @@
+{
+  "projectName": "message-me-fe",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "yarn",
+  "tailwind": true,
+  "addOnOptions": {},
+  "git": true,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "eslint"
+  ]
+}
