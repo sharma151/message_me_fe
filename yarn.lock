@@ -2366,6 +2366,11 @@ react-refresh@^0.18.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.18.0.tgz#2dce97f4fe932a4d8142fa1630e475c1729c8062"
   integrity sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==
 
+react-resizable-panels@^4.5.9:
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/react-resizable-panels/-/react-resizable-panels-4.5.9.tgz#f67a2e70ff7221a360c3e0edd230eb50d30daa70"
+  integrity sha512-7l0w2TxYq032F2o6PnfxDbDEKzi1lohDw3BKx4OBkh6uu7uh+Gj1C0Ubpv0/fOO2bRvo+IIQMOoFE0l2LgpeAg==
+
 react-toastify@^11.0.5:
   version "11.0.5"
   resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-11.0.5.tgz#ce4c42d10eeb433988ab2264d3e445c4e9d13313"
