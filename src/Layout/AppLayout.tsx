@@ -1,4 +1,5 @@
 // src/components/layout/AppLayout.tsx
+import ActionBar from '@/components/ActionBar'
 import Sidebar from '@/components/SideBar'
 import { socketService } from '@/socket/socket'
 import { useEffect } from 'react'
@@ -16,9 +17,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="h-screen">
       {/* Left Sidebar */}
       <div className="h-screen flex">
-        {/* <ActionBar />  */}
+        <div className='flex w-1/3'>
+          <ActionBar />
 
-        <Sidebar />
+          <Sidebar />
+        </div>
 
         {/* Right Panel */}
 
