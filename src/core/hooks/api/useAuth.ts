@@ -18,13 +18,14 @@ export const useAuth = () => {
       await AuthService.login(payload),
 
     onSuccess: (data) => {
+      console.log('Login Success Data:', data)
       loginStore({
         user: {
-          id: data?.user?._id || '',
-          name: data?.user?.username || '',
-          email: data?.user?.email,
+          id: data?.user?.id.toString() || '',
+          name: data?.user?.name || '',
+          email: data?.user?.email || '',
         },
-        accessToken: data?.accessToken || '',
+        accessToken: data?.access_token || '',
       })
 
       navigate({ to: '/chats' })
@@ -43,16 +44,16 @@ export const useAuth = () => {
 
   //Fetch LoggedIn user PROFILE DETAIL
 
-  const UserProfileDetail = useQuery({
-    queryKey: ['profiledetail'],
-    queryFn: AuthService.fetchLoggedinProfile,
-  })
+  // const UserProfileDetail = useQuery({
+  //   queryKey: ['profiledetail'],
+  //   queryFn: AuthService.fetchLoggedinProfile,
+  // })
 
   return {
     login: loginMutation.mutate,
     isLoggingIn: loginMutation.isPending,
     register: registerMutation.mutate,
     isRegistering: registerMutation.isPending,
-    userdetail: UserProfileDetail.data?.data?.data,
+    // userdetail: UserProfileDetail.data?.data?.data,
   }
 }

@@ -5,7 +5,7 @@ import type {
   AuthResponse,
   LoginFormInterface,
   RegisterFormInterface,
-  UserProfileResponse,
+  // UserProfileResponse,
 } from '@/@types/forms/auth'
 import type { AxiosResponseInterface } from '@/@types/response/api-response'
 
@@ -13,11 +13,13 @@ import type { AxiosResponseInterface } from '@/@types/response/api-response'
 
 class AuthService {
   // User Login
-  static async login(credential: LoginFormInterface) {
+  static async login(credential: LoginFormInterface): Promise<AuthResponse> {
     try {
-      const response: AxiosResponseInterface<AuthResponse> =
-        await httpBase.post('/auth/login', credential)
-      return response?.data?.data
+      const response = await httpBase.post<AuthResponse>(
+        '/auth/login',
+        credential,
+      )
+      return response?.data
     } catch (error) {
       throw handleError(error as AxiosError)
     }
@@ -36,15 +38,15 @@ class AuthService {
 
   //Fetch LoggedinProfile Details
 
-  static async fetchLoggedinProfile() {
-    try {
-      const response: AxiosResponseInterface<UserProfileResponse> =
-        await httpBase.get('/auth/me')
-      return response
-    } catch (error) {
-      throw handleError(error as AxiosError)
-    }
-  }
+  // static async fetchLoggedinProfile() {
+  //   try {
+  //     const response: AxiosResponseInterface<UserProfileResponse> =
+  //       await httpBase.get('/auth/me')
+  //     return response
+  //   } catch (error) {
+  //     throw handleError(error as AxiosError)
+  //   }
+  // }
 
   // User Logout
   //   static async logout() {
