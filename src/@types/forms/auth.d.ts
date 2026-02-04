@@ -1,26 +1,19 @@
 export interface LoginFormInterface {
   email?: string
   password: string
-  remember_me?: string | boolean
-  username?: string
 }
 
 export interface RegisterFormInterface {
-  username?: string
+  name?: string
   email?: string
   password?: string
-  confirmPassword?: string
-  role?: string
-  [key: string]: unknown
 }
 
 export interface RegisterFormResponse {
-  statusCode: number
-  data: {
-    user: User
-  }
-  message: string
-  success: boolean
+  id: number
+  name: string
+  email: string
+  createdAt: string
 }
 export interface Avatar {
   url: string
