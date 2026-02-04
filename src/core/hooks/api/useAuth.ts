@@ -18,7 +18,6 @@ export const useAuth = () => {
       await AuthService.login(payload),
 
     onSuccess: (data) => {
-      console.log('Login Success Data:', data)
       loginStore({
         user: {
           id: data?.user?.id.toString() || '',
