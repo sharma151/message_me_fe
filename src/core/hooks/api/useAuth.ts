@@ -38,6 +38,7 @@ export const useAuth = () => {
     mutationFn: (payload: RegisterFormInterface) =>
       AuthService.register(payload),
     onSuccess: () => {
+      navigate({ to: '/auth/login' })
       Success('Registration successful. Please login.')
     },
   })
