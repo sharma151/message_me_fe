@@ -39,8 +39,7 @@ class AuthService {
   // fetch users
   static async fetchUser() {
     try {
-      const response: AxiosResponseInterface<AuthResponse> =
-        await httpBase.get('/users')
+      const response = await httpBase.get('/users')
       return response
     } catch (error) {
       throw handleError(error as AxiosError)
@@ -53,7 +52,7 @@ class AuthService {
     try {
       const response: AxiosResponseInterface<UserProfileResponse> =
         await httpBase.get('/auth/me')
-      return response
+      return response.data
     } catch (error) {
       throw handleError(error as AxiosError)
     }
