@@ -37,7 +37,7 @@ export const useChat = () => {
   return {
     fetchAllUsers: fetchAllUsers.data,
     isFetchingAllUsers: fetchAllUsers.isFetching,
-    fetchAvailableUsers: fetchAvailableUsers.data?.data,
+    fetchAvailableUsers: fetchAvailableUsers.data,
     isFetchingAvailableUsers: fetchAvailableUsers.isFetching,
     updateUserName: updateUserName.mutate,
     isUpdatingUserName: updateUserName.isPending,
