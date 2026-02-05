@@ -63,19 +63,17 @@ const ChatRoomPage = () => {
             key={msg.id}
             style={{
               marginBottom: 8,
-              textAlign: msg.senderId === userId ? 'right' : 'left',
+              //   textAlign: msg.senderId === userId ? 'right' : 'left',
             }}
           >
-            <div style={{ fontSize: 12, opacity: 0.6 }}>
-              {msg.sender.name}
-            </div>
+            <div style={{ fontSize: 12, opacity: 0.6 }}>{msg.sender.name}</div>
             <div
               style={{
                 display: 'inline-block',
                 padding: '8px 12px',
                 borderRadius: 8,
-                background:
-                  msg.senderId === userId ? '#DCF8C6' : '#F1F1F1',
+                // background:
+                //   msg.senderId === userId ? '#DCF8C6' : '#F1F1F1',
               }}
             >
               {msg.content}

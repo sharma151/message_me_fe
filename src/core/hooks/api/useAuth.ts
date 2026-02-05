@@ -42,18 +42,26 @@ export const useAuth = () => {
     },
   })
 
+  //Fetch Users
+  const fetchUsers = useQuery({
+    queryKey: ['users'],
+    queryFn: AuthService.fetchUser,
+  })
+
   //Fetch LoggedIn user PROFILE DETAIL
 
-  // const UserProfileDetail = useQuery({
-  //   queryKey: ['profiledetail'],
-  //   queryFn: AuthService.fetchLoggedinProfile,
-  // })
+  const UserProfileDetail = useQuery({
+    queryKey: ['profiledetail'],
+    queryFn: AuthService.fetchLoggedinProfile,
+  })
 
   return {
     login: loginMutation.mutate,
     isLoggingIn: loginMutation.isPending,
     register: registerMutation.mutate,
     isRegistering: registerMutation.isPending,
-    // userdetail: UserProfileDetail.data?.data?.data,
+    users: fetchUsers.data,
+    isFetchingUsers: fetchUsers.isFetching,
+    userdetail: UserProfileDetail.data?.data?.data,
   }
 }
