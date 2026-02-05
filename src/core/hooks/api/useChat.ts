@@ -1,10 +1,17 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import ChatService from '@/core/services/chat.service'
+import AuthService from '@/core/services/auth.service'
 export const useChat = () => {
   const createChatRoomMutation = useMutation({
-    mutationFn: async (userId: number) => {
-      await ChatService.createChatRoom(userId)
+    mutationFn: async (receiverUserId: number) => {
+      await ChatService.createChatRoom(receiverUserId)
     },
+  })
+
+  //FetchAllUsers
+  const fetchAllUsers = useQuery({
+    queryKey: ['users'],
+    queryFn: ChatService.fetchAllUsers,
   })
 
   //fetch chats message
@@ -19,5 +26,7 @@ export const useChat = () => {
     isCreatingChatRoom: createChatRoomMutation.isPending,
     fetchChats: fetchChats.mutate,
     isFetchingChats: fetchChats.isPending,
+    fetchAllUsers: fetchAllUsers.data?.data,
+    isFetchingAllUsers: fetchAllUsers.isFetching,
   }
 }

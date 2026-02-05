@@ -3,6 +3,17 @@ import type { AxiosError } from 'axios'
 import httpBase from '@/core/services/httpBase'
 
 class ChatService {
+
+  // fetch users
+  static async fetchAllUsers() {
+    try {
+      const response = await httpBase.get('/users')
+      return response
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+
   //fetch chats messages
   static async fetchChats(chatId: number) {
     try {
@@ -14,9 +25,9 @@ class ChatService {
   }
 
   //create Chat Room
-  static async createChatRoom(userId: number) {
+  static async createChatRoom(receiverUserId: number) {
     try {
-      const response = await httpBase.post('/chat/private', { userId })
+      const response = await httpBase.post('/chat/private', { receiverUserId })
       return response.data
     } catch (error) {
       throw handleError(error as AxiosError)

@@ -42,11 +42,6 @@ export const useAuth = () => {
     },
   })
 
-  //Fetch Users
-  const fetchUsers = useQuery({
-    queryKey: ['users'],
-    queryFn: AuthService.fetchUser,
-  })
 
   //Fetch LoggedIn user PROFILE DETAIL
 
@@ -60,8 +55,6 @@ export const useAuth = () => {
     isLoggingIn: loginMutation.isPending,
     register: registerMutation.mutate,
     isRegistering: registerMutation.isPending,
-    users: fetchUsers.data?.data,
-    isFetchingUsers: fetchUsers.isFetching,
     userdetail: UserProfileDetail.data?.data,
   }
 }

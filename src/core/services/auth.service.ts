@@ -36,16 +36,6 @@ class AuthService {
     }
   }
 
-  // fetch users
-  static async fetchUser() {
-    try {
-      const response = await httpBase.get('/users')
-      return response
-    } catch (error) {
-      throw handleError(error as AxiosError)
-    }
-  }
-
   //Fetch LoggedinProfile Details
 
   static async fetchLoggedinProfile() {
