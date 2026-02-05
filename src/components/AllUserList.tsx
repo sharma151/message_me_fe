@@ -2,8 +2,13 @@ import type { UserProfileResponse } from '@/@types/forms/auth'
 import defaultimage from '@/assets/default-user.webp'
 import { useNavigate } from '@tanstack/react-router'
 import { useChat } from '@/core/hooks/api/useChat'
-const AllUserList = () => {
-  const { fetchAllUsers, isFetchingAllUsers,createChatRoom } = useChat()
+import { FaArrowLeft } from 'react-icons/fa'
+
+interface AllUsersListProps {
+  onBack?: () => void
+}
+const AllUserList = ({ onBack }: AllUsersListProps) => {
+  const { fetchAllUsers, isFetchingAllUsers, createChatRoom } = useChat()
 
   const navigate = useNavigate()
   const handleRowClick = ({ chatID }: { chatID: number }) => {
@@ -20,7 +25,15 @@ const AllUserList = () => {
   return (
     <>
       <div className="px-2 ">
-        <h2 className="text-lg font-semibold mb-2">All Users</h2>
+        <div className="flex items-center  gap-1 p-2">
+          <button
+            onClick={onBack}
+            className="p-2 hover:bg-gray-200 rounded-full transition-colors"
+          >
+            <FaArrowLeft size={16} />
+          </button>
+          <h2 className="text-lg font-semibold ">All Users</h2>
+        </div>
         <div className="space-y-1 overflow-y-auto max-h-96">
           {fetchAllUsers ? (
             fetchAllUsers.map((user: UserProfileResponse) => (

@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import ChatService from '@/core/services/chat.service'
-import AuthService from '@/core/services/auth.service'
 export const useChat = () => {
   const createChatRoomMutation = useMutation({
     mutationFn: async (receiverUserId: number) => {
