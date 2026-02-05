@@ -7,6 +7,7 @@ const AllUserList = () => {
 
   const navigate = useNavigate()
   const handleRowClick = ({ chatID }: { chatID: any }) => {
+    
     navigate({
       to: '/chats/$chatId',
       params: { chatId: chatID },
