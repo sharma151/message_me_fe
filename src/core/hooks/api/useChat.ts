@@ -32,6 +32,9 @@ export const useChat = () => {
     mutationFn: async (receiverUserId: number) => {
       await ChatService.createChatRoom(receiverUserId)
     },
+    onSuccess: () => {
+      fetchAvailableUsers.refetch()
+    }
   })
 
   return {

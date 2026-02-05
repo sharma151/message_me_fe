@@ -14,8 +14,7 @@ const AllUserList = ({ onBack }: AllUsersListProps) => {
   const handleRowClick = ({ chatID }: { chatID: number }) => {
     createChatRoom(chatID)
     navigate({
-      to: '/chats/$chatId',
-      params: { chatId: chatID.toString() },
+      to: '/chats',
     })
   }
 
