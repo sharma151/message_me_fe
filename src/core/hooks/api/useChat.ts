@@ -1,16 +1,23 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import ChatService from '@/core/services/chat.service'
 export const useChat = () => {
-  const createChatRoomMutation = useMutation({
-    mutationFn: async (receiverUserId: number) => {
-      await ChatService.createChatRoom(receiverUserId)
-    },
-  })
-
   //FetchAllUsers
   const fetchAllUsers = useQuery({
-    queryKey: ['users'],
+    queryKey: ['AllUsers'],
     queryFn: ChatService.fetchAllUsers,
+  })
+
+  //FetchAvailableUsers
+  const fetchAvailableUsers = useQuery({
+    queryKey: ['available-users'],
+    queryFn: ChatService.fetchAvailableUsers,
+  })
+
+  //Update UserName
+  const updateUserName = useMutation({
+    mutationFn: async (name: string) => {
+      await ChatService.updateUserName(name)
+    },
   })
 
   //fetch chats message
@@ -20,12 +27,23 @@ export const useChat = () => {
     },
   })
 
+  //create Chat Room
+  const createChatRoomMutation = useMutation({
+    mutationFn: async (receiverUserId: number) => {
+      await ChatService.createChatRoom(receiverUserId)
+    },
+  })
+
   return {
-    createChatRoom: createChatRoomMutation.mutate,
-    isCreatingChatRoom: createChatRoomMutation.isPending,
+    fetchAllUsers: fetchAllUsers.data,
+    isFetchingAllUsers: fetchAllUsers.isFetching,
+    fetchAvailableUsers: fetchAvailableUsers.data?.data,
+    isFetchingAvailableUsers: fetchAvailableUsers.isFetching,
+    updateUserName: updateUserName.mutate,
+    isUpdatingUserName: updateUserName.isPending,
     fetchChats: fetchChats.mutate,
     isFetchingChats: fetchChats.isPending,
-    fetchAllUsers: fetchAllUsers.data?.data,
-    isFetchingAllUsers: fetchAllUsers.isFetching,
+    createChatRoom: createChatRoomMutation.mutate,
+    isCreatingChatRoom: createChatRoomMutation.isPending,
   }
 }
