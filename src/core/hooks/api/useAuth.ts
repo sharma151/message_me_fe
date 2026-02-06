@@ -55,6 +55,6 @@ export const useAuth = () => {
     isLoggingIn: loginMutation.isPending,
     register: registerMutation.mutate,
     isRegistering: registerMutation.isPending,
-    userdetail: UserProfileDetail.data?.data,
+    userdetail: UserProfileDetail.data,
   }
 }

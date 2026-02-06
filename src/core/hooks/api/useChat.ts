@@ -21,19 +21,12 @@ export const useChat = (chatId?: number) => {
     },
   })
 
-  //fetch chats message
-  const fetchChats = useMutation({
-    mutationFn: async (chatId: number) => {
-      await ChatService.fetchChats(chatId)
-    },
-  })
-
+  //Fetch Chats History
   const chatMessagesQuery = useQuery({
-    // The queryKey is vital; it acts as the "ID" for this specific chat's data
     queryKey: ['chats', chatId],
     queryFn: () => ChatService.fetchChats(chatId!),
     enabled: !!chatId,
-    staleTime: 1000 * 60 * 5, // Keep data fresh for 5 mins
+    staleTime: 1000 * 60 * 5,
   })
 
   //create Chat Room
@@ -53,8 +46,6 @@ export const useChat = (chatId?: number) => {
     isFetchingAvailableUsers: fetchAvailableUsers.isFetching,
     updateUserName: updateUserName.mutate,
     isUpdatingUserName: updateUserName.isPending,
-    fetchChats: fetchChats.mutate,
-    isFetchingChats: fetchChats.isPending,
     messages: chatMessagesQuery.data || [],
     isLoadingMessages: chatMessagesQuery.isLoading,
     createChatRoom: createChatRoomMutation.mutate,

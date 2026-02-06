@@ -40,23 +40,12 @@ class AuthService {
 
   static async fetchLoggedinProfile() {
     try {
-      const response: AxiosResponseInterface<UserProfileResponse> =
-        await httpBase.get('/auth/me')
+      const response = await httpBase.get('/auth/me')
       return response.data
     } catch (error) {
       throw handleError(error as AxiosError)
     }
   }
 
-  // User Logout
-  //   static async logout() {
-  //     try {
-  //       const response: AxiosResponseInterface<unknown> =
-  //         await httpBase.post("/users/logout");
-  //       return response;
-  //     } catch (error) {
-  //       throw handleError(error as AxiosError);
-  //     }
-  //   }
 }
 export default AuthService
