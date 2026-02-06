@@ -6,7 +6,7 @@ const ChatRoomNav = () => {
     <>
       <div
         key={activeChat?.chatId}
-        className=" flex items-center border-b  border-gray-200 gap-3 p-3 "
+        className=" flex items-center border-b bg-white border-gray-200 gap-3 p-3 "
       >
         <span>
           <img

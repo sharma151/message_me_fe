@@ -109,27 +109,13 @@ const ChatRoomPage = () => {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh',
-        background: '#f5f5f5',
-      }}
-    >
+    <div className="flex flex-col h-[100vh] bg-[#efeae2]">
       <ChatRoomNav />
 
       {/* Messages Area */}
       <div
         ref={scrollRef}
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: 16,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 12,
-        }}
+        className="flex-1 overflow-y-auto px-4 py-2 flex flex-col gap-2"
       >
         {messages.map((msg: Message) => {
           const isMe = Number(msg?.senderId) === Number(userId)
