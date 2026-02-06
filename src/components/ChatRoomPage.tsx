@@ -4,6 +4,8 @@ import { socketService } from '@/socket/socket'
 import { useAuthStore } from '@/store/auth.store'
 import ChatRoomNav from './ChatRoomNav'
 import { useChat } from '@/core/hooks/api/useChat'
+// import CustomDropdown from './UI/CustomDropdown'
+// import { FaAngleDown } from 'react-icons/fa'
 
 type Message = {
   id: number
@@ -13,13 +15,12 @@ type Message = {
     id: number
     name: string
   }
+  createdAt: string
 }
 
 const ChatRoomPage = () => {
   const { chatId } = useParams({ strict: false })
   const parsedChatId = Number(chatId)
-
-  // 1. Fetch history via TanStack Query (POST request)
   const { messages, isLoadingMessages, queryClient } = useChat(parsedChatId)
 
   const userId = useAuthStore((state) => state.user?.id)
@@ -32,7 +33,6 @@ const ChatRoomPage = () => {
     if (!parsedChatId || !userId) return
 
     socketService.connect(parsedChatId)
-    
     socketService.on('newMessage', (newMessage: Message) => {
       queryClient.setQueryData(
         ['chats', parsedChatId],
@@ -105,25 +105,34 @@ const ChatRoomPage = () => {
               }}
             >
               <div
-                style={{
-                  fontSize: 11,
-                  opacity: 0.6,
-                  marginBottom: 2,
-                  textAlign: isMe ? 'right' : 'left',
-                }}
+                className={`max-w- rounded-lg px-3 py-2 text-sm shadow relative flex gap-2 group
+                  ${
+                    isMe
+                      ? 'bg-[#dcf8c6] rounded-tr-none'
+                      : 'bg-white rounded-tl-none'
+                  }
+                `}
               >
-                {msg?.sender?.name}
-              </div>
-              <div
-                style={{
-                  padding: '10px 14px',
-                  borderRadius: 12,
-                  background: isMe ? '#007AFF' : '#fff',
-                  color: isMe ? '#fff' : '#000',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                }}
-              >
-                {msg.content}
+                <div>
+                  {!isMe && (
+                    <p className="text-xs font-bold text-blue-600 mb-1">
+                      {msg?.sender?.name}
+                    </p>
+                  )}
+
+                  {msg.content && (
+                    <p className="text-gray-900 wrap-break-words leading-relaxed">
+                      {msg.content}
+                    </p>
+                  )}
+
+                  <p className="text-[10px] text-gray-500 text-right mt-1 ml-4">
+                    {new Date(msg.createdAt).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </p>
+                </div>
               </div>
             </div>
           )
@@ -144,18 +153,12 @@ const ChatRoomPage = () => {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Type a message..."
-          style={{
-            flex: 1,
-            padding: '10px 15px',
-            borderRadius: 20,
-            border: '1px solid #ccc',
-            outline: 'none',
-          }}
+          className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-1 "
           onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
         />
         <button
           onClick={sendMessage}
-          className="px-4 py-2.5 rounded-md bg-blue-500 text-white font-bold cursor-pointer"
+          className="px-4 py-2.5 rounded-full bg-blue-500 text-white font-bold cursor-pointer"
         >
           Send
         </button>
