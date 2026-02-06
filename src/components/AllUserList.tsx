@@ -12,6 +12,7 @@ const AllUserList = ({ onBack }: AllUsersListProps) => {
 
   const navigate = useNavigate()
   const handleRowClick = ({ chatID }: { chatID: number }) => {
+    onBack?.()
     createChatRoom(chatID)
     navigate({
       to: '/chats',
