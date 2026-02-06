@@ -5,7 +5,6 @@ import type {
   AuthResponse,
   LoginFormInterface,
   RegisterFormInterface,
-  UserProfileResponse,
 } from '@/@types/forms/auth'
 import type { AxiosResponseInterface } from '@/@types/response/api-response'
 
@@ -46,6 +45,5 @@ class AuthService {
       throw handleError(error as AxiosError)
     }
   }
-
 }
 export default AuthService
