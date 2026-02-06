@@ -1,9 +1,5 @@
 import { useAuthStore } from '@/store/auth.store'
 import { Outlet, createRootRoute, redirect } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-// import { TanStackDevtools } from '@tanstack/react-devtools'
-
-// import Header from '../components/Header'
 
 export const Route = createRootRoute({
   beforeLoad: ({ location }) => {
@@ -30,7 +26,6 @@ function RootLayout() {
       <main className="overflow-y-auto w-full ">
         <Outlet />
       </main>
-      <TanStackRouterDevtoolsPanel />
     </>
   )
 }

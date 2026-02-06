@@ -2,7 +2,6 @@ import { useActiveChat } from '@/core/hooks/common/useActiveChat'
 import defaultimage from '@/assets/default-user.webp'
 const ChatRoomNav = () => {
   const { activeChat } = useActiveChat()
-  console.log('activeChat', activeChat)
   return (
     <>
       <div

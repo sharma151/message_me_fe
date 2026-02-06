@@ -1,6 +1,7 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import ChatService from '@/core/services/chat.service'
-export const useChat = () => {
+export const useChat = (chatId?: number) => {
+  const queryClient = useQueryClient()
   //FetchAllUsers
   const fetchAllUsers = useQuery({
     queryKey: ['AllUsers'],
@@ -27,6 +28,14 @@ export const useChat = () => {
     },
   })
 
+  const chatMessagesQuery = useQuery({
+    // The queryKey is vital; it acts as the "ID" for this specific chat's data
+    queryKey: ['chats', chatId],
+    queryFn: () => ChatService.fetchChats(chatId!),
+    enabled: !!chatId,
+    staleTime: 1000 * 60 * 5, // Keep data fresh for 5 mins
+  })
+
   //create Chat Room
   const createChatRoomMutation = useMutation({
     mutationFn: async (receiverUserId: number) => {
@@ -34,7 +43,7 @@ export const useChat = () => {
     },
     onSuccess: () => {
       fetchAvailableUsers.refetch()
-    }
+    },
   })
 
   return {
@@ -46,7 +55,10 @@ export const useChat = () => {
     isUpdatingUserName: updateUserName.isPending,
     fetchChats: fetchChats.mutate,
     isFetchingChats: fetchChats.isPending,
+    messages: chatMessagesQuery.data || [],
+    isLoadingMessages: chatMessagesQuery.isLoading,
     createChatRoom: createChatRoomMutation.mutate,
     isCreatingChatRoom: createChatRoomMutation.isPending,
+    queryClient,
   }
 }
