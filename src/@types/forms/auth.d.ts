@@ -25,3 +25,10 @@ export interface AuthResponse {
     createdAt: string
   }
 }
+
+export interface UserProfileResponse {
+  id: number
+  name: string
+  email: string
+  createdAt: string
+}

@@ -7,3 +7,12 @@ export interface AxiosResponseInterface<T> {
 export interface AxiosInterface<T> extends AxiosResponse<T> {
   message: string
 }
+
+export interface AvailableUsersResponse {
+  chatId: number
+  name: null | string
+  isGroup: boolean
+  receiverId: null | number
+  receiverName: null | string
+  message: null | string
+}
