@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from '@tanstack/react-router'
 import { socketService } from '@/socket/socket'
 import { useAuthStore } from '@/store/auth.store'
+import ChatRoomNav from './ChatRoomNav'
 
 type Message = {
   id: number
@@ -56,6 +57,7 @@ const ChatRoomPage = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <ChatRoomNav />
       {/* Messages */}
       <div style={{ flex: 1, overflowY: 'auto', padding: 16 }}>
         {messages.map((msg) => (
