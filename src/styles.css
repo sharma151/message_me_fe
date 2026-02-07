@@ -1,15 +1,60 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 body {
   @apply m-0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+@theme inline {
+  --color-background-main: #1d1f1f;
+  --color-sidebar: #161717;
+  --color-hover: #2e2f2f;
+  --color-inputbox: #242626;
+  --color-placeholder-text: #a7a8a8;
+  --color-sentmsgcolor:#144D37;
+}
+
+.bg-doodle-gray {
+  position: relative;
+  z-index: 0;
+}
+
+/* background layer */
+.bg-doodle-gray::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background-image: url('@/assets/inbox-bg.png');
+  background-repeat: repeat;
+  background-size: auto;
+
+  /* background-only effects */
+  filter: grayscale(100%) brightness(0.2) contrast(1.15);
+
+  z-index: -1;
+}
+
+/* Target the specific container or use 'body' for the whole page */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 7px; /* Makes the bar thin */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #454646; /* Your specific color */
+  border-radius: 20px; /* Makes the edges rounded */
+}
+
+/* Optional: Slightly darker on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #333333;
 }
