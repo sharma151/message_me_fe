@@ -34,7 +34,10 @@ const AvailableUser = () => {
                   className="w-10 h-10 rounded-full"
                 />
               </span>
-              <span className="font-medium">{user.receiverName}</span>{' '}
+              <div className='flex flex-col'>
+                <span className="font-medium">{user.receiverName}</span>{' '}
+                <span className="text-sm text-gray-500 block truncate max-w-[100px]">{user.message}</span>
+              </div>
             </div>
           ))}
         </div>

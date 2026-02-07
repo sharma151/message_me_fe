@@ -20,11 +20,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <ActionBar />
       </div>
 
-      <Panel defaultSize={350} minSize={200} maxSize={550}>
+      <Panel defaultSize={350} minSize={200} maxSize={400}>
         <Sidebar />
       </Panel>
 
-      <Separator className="w-0.5 bg-gray-300 " />
+      <Separator className="w-0 " />
 
       <Panel>
         <div className="h-full flex-1">{children}</div>
