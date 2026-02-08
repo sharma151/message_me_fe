@@ -1,21 +1,20 @@
 import { useActiveChat } from '@/core/hooks/common/useActiveChat'
-import defaultimage from '@/assets/default-user.webp'
+import DefaultUser from './DefaultUser'
 const ChatRoomNav = () => {
   const { activeChat } = useActiveChat()
   return (
     <>
       <div
         key={activeChat?.chatId}
-        className=" flex items-center border-b bg-white border-gray-200 gap-3 p-3 "
+        className=" flex items-center  bg-sidebar  gap-3 p-3 "
       >
         <span>
-          <img
-            src={defaultimage || '/default-avatar.png'}
-            alt={'default user'}
-            className="w-10 h-10 rounded-full"
-          />
+          
+          <DefaultUser size={40} />
         </span>
-        <span className="font-medium">{activeChat?.receiverName}</span>{' '}
+        <span className="font-medium text-white">
+          {activeChat?.receiverName}
+        </span>{' '}
       </div>
     </>
   )
