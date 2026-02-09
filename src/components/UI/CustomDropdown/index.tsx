@@ -1,43 +1,73 @@
 import React from 'react'
-import { Dropdown } from 'antd'
-import type { MenuProps, DropDownProps } from 'antd'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/UI/dropdown-menu'
+import { twMerge } from 'tailwind-merge'
+
+export interface DropdownItem {
+  key: string | number
+  label: React.ReactNode
+  disabled?: boolean
+  icon?: React.ReactNode
+  className?: string
+}
 
 interface ReusableDropdownProps {
-  items?: MenuProps['items']
+  items?: DropdownItem[]
   triggerContent?: React.ReactNode
-  onMenuClick?: MenuProps['onClick'] // 1. Callback to access clicked value
+  onMenuClick?: (item: DropdownItem) => void
   buttonClassName?: string
   menuClassName?: string
-  placement?: DropDownProps['placement']
-  trigger?: DropDownProps['trigger']
+  placement?: 'top' | 'right' | 'bottom' | 'left'
+  align?: 'start' | 'center' | 'end'
 }
 
 const CustomDropdown: React.FC<ReusableDropdownProps> = ({
-  items,
+  items = [],
   triggerContent,
   onMenuClick,
   buttonClassName,
   menuClassName,
-  placement = 'bottomRight',
-  trigger = ['hover'],
+  placement = 'bottom',
+  align = 'end',
 }) => {
   return (
-    <Dropdown
-      placement={placement}
-      trigger={trigger}
-      menu={{
-        items,
-        className: menuClassName,
-        onClick: onMenuClick,
-      }}
-    >
-      <span
-        className={buttonClassName}
-        // style={{ cursor: "pointer", display: "inline-block" }}
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <span
+          className={twMerge(
+            'inline-flex items-center cursor-pointer',
+            buttonClassName,
+          )}
+        >
+          {triggerContent}
+        </span>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent
+        side={placement}
+        align={align}
+        className={twMerge('bg-gray-600 px-2 border-gray-300', menuClassName)}
       >
-        {triggerContent}
-      </span>
-    </Dropdown>
+        {items.map((item) => (
+          <DropdownMenuItem
+            key={item.key}
+            disabled={item.disabled}
+            onClick={() => onMenuClick?.(item)}
+            className={twMerge(
+              'cursor-pointer flex items-center gap-2 text-white ',
+              item.className,
+            )}
+          >
+            {item.icon && <span>{item.icon}</span>}
+            {item.label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 

@@ -2,7 +2,6 @@ import CustomDropdown from '@/components/UI/CustomDropdown'
 import { useToast } from '@/core/hooks/common/useToast'
 import { useAuthStore } from '@/store/auth.store'
 import { useNavigate } from '@tanstack/react-router'
-import type { MenuProps } from 'antd'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { IoChatboxEllipsesOutline } from 'react-icons/io5'
 import { TbLogout } from 'react-icons/tb'
@@ -15,7 +14,7 @@ const SideBarNav = ({ onOpenNewChat }: SideBarNavProps) => {
   const logoutStore = useAuthStore((state) => state.logout)
   const navigate = useNavigate()
   const { success: Success } = useToast()
-  const items: MenuProps['items'] = [
+  const items = [
     { key: 'Logout', label: 'Logout', icon: <TbLogout size={16} /> },
   ]
 
@@ -30,13 +29,13 @@ const SideBarNav = ({ onOpenNewChat }: SideBarNavProps) => {
         <h2 className="text-2xl font-bold  items-center text-white">chatapp</h2>
         <div className="flex items-center gap-3">
           <button className="cursor-pointer" onClick={onOpenNewChat}>
-            <IoChatboxEllipsesOutline size={24} color='white' />
+            <IoChatboxEllipsesOutline size={24} color="white" />
           </button>
 
           <div>
             <CustomDropdown
               items={items}
-              triggerContent={<BsThreeDotsVertical size={22} color='white'/>}
+              triggerContent={<BsThreeDotsVertical size={22} color="white" />}
               onMenuClick={handleLogoutUser}
             />
           </div>
