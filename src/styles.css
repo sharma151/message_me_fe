@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 body {
+  
   @apply m-0;
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
@@ -15,13 +16,30 @@ code {
 }
 
 @theme inline {
-  --color-background-main: #1d1f1f;
-  --color-sidebar: #161717;
-  --color-hover: #2e2f2f;
-  --color-inputbox: #242626;
-  --color-placeholder-text: #a7a8a8;
-  --color-sentmsgcolor:#144D37;
+  /* shades of gray */
+
+  --color-gray-100: #bfc0c0;
+  --color-gray-200: #a7a8a8;
+  --color-gray-300: #2e2f2f;
+  --color-gray-400: #575b5b;
+  --color-gray-500: #3e4141;
+  --color-gray-600: #242626;
+  --color-gray-700: #1d1f1f;
+  --color-gray-800: #161717;
+  /* shades of green */
+
+  --color-green-100: #c2efde;
+  --color-green-200: #9ae5c8;
+  --color-green-300: #71dab2;
+  --color-green-400: #49d09c;
+  --color-green-500: #2fb682;
+  --color-green-600: #258e65;
+  --color-green-700: #1a6548;
+  --color-green-800: #103d2b;
+  --color-green-900: #144d37;
 }
+
+/* ChatInbox background image styles starts here */
 
 .bg-doodle-gray {
   position: relative;
@@ -33,28 +51,28 @@ code {
   content: '';
   position: absolute;
   inset: 0;
-
   background-image: url('@/assets/inbox-bg.png');
   background-repeat: repeat;
   background-size: auto;
-
   /* background-only effects */
   filter: grayscale(100%) brightness(0.2) contrast(1.15);
-
   z-index: -1;
 }
+/* ChatInbox background image styles ends here */
 
-/* Target the specific container or use 'body' for the whole page */
+
+
+/* Custom Scrollbar styles starts here */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 7px; /* Makes the bar thin */
+  width: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #454646; /* Your specific color */
-  border-radius: 20px; /* Makes the edges rounded */
+  background-color: #454646;
+  border-radius: 20px;
 }
 
-/* Optional: Slightly darker on hover */
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #333333;
 }
+/* Custom Scrollbar styles ends here */
