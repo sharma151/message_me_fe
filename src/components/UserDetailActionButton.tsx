@@ -7,7 +7,7 @@ const UserDetailActionButton = () => {
     <>
       <div className="w-18 shrink-0 flex flex-col  items-center justify-end  ">
         <div className="" onClick={onUserDetailOpen}>
-          <DefaultUser />
+          <DefaultUser  size={40} iconSize={20}/>
         </div>
       </div>
     </>

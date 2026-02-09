@@ -3,8 +3,8 @@ import { useToast } from '@/core/hooks/common/useToast'
 import { useAuthStore } from '@/store/auth.store'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { IoChatboxEllipsesOutline } from 'react-icons/io5'
 import { TbLogout } from 'react-icons/tb'
+import AddChatUser from '@/assets/addchatIconwhite.png'
 
 interface SideBarNavProps {
   onOpenNewChat?: () => void
@@ -28,18 +28,18 @@ const SideBarNav = ({ onOpenNewChat }: SideBarNavProps) => {
       <div className="flex items-center  justify-between p-4 border-b border-gray-800">
         <Link
           to="/"
-          className="flex items-center  text-xl font-bold text-white"
+          className="flex items-center  text-xl font-semibold text-white"
           activeProps={{
             className:
               'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
           }}
         >
-          ChatAPP
+          WhatsApp
         </Link>
 
         <div className="flex items-center gap-3">
           <button className="cursor-pointer" onClick={onOpenNewChat}>
-            <IoChatboxEllipsesOutline size={24} color="white" />
+            <img src={AddChatUser} alt="Chat" className="w-6 h-6 text-white" />
           </button>
 
           <div>
