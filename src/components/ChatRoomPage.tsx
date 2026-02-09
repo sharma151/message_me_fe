@@ -8,6 +8,8 @@ import { PiPlusBold } from 'react-icons/pi'
 import { IoSend } from 'react-icons/io5'
 import { MdInsertEmoticon } from 'react-icons/md'
 import { RiLoader2Line } from 'react-icons/ri'
+import CustomDropdown from './UI/CustomDropdown'
+import { FaAngleDown } from 'react-icons/fa'
 
 type Message = {
   id: number
@@ -116,6 +118,8 @@ const ChatRoomPage = () => {
     )
   }
 
+  const items = [{ key: 'Delete', label: 'Unsend' }]
+
   return (
     <div className="flex flex-col h-screen   bg-gray-800  bg-doodle-gray">
       <ChatRoomNav />
@@ -149,6 +153,18 @@ const ChatRoomPage = () => {
                     <p className="text-xs font-bold text-blue-600 mb-1">
                       {msg?.sender?.name}
                     </p>
+                  )}
+                  {isMe ? (
+                    <CustomDropdown
+                      items={items}
+                      buttonClassName="opacity-0 group-hover:opacity-100 absolute top-2 right-2 z-10 bg-white/50 rounded-full "
+                      triggerContent={<FaAngleDown size={12} />}
+                      onMenuClick={() => {
+                        alert('clicked')
+                      }}
+                    />
+                  ) : (
+                    ''
                   )}
 
                   {msg.content && (
