@@ -8,7 +8,7 @@ export const Route = createFileRoute('/chats/')({
 function ChatsHomePage() {
   return (
     <AppLayout>
-      <div className="flex h-full items-center justify-center text-gray-400">
+      <div className="flex h-full items-center justify-center text-gray-400  bg-gray-800  bg-doodle-gray">
         Select a chat to start messaging
       </div>
     </AppLayout>

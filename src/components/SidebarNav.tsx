@@ -1,7 +1,7 @@
 import CustomDropdown from '@/components/UI/CustomDropdown'
 import { useToast } from '@/core/hooks/common/useToast'
 import { useAuthStore } from '@/store/auth.store'
-import { useNavigate } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { IoChatboxEllipsesOutline } from 'react-icons/io5'
 import { TbLogout } from 'react-icons/tb'
@@ -26,7 +26,17 @@ const SideBarNav = ({ onOpenNewChat }: SideBarNavProps) => {
   return (
     <>
       <div className="flex items-center  justify-between p-4 border-b border-gray-800">
-        <h2 className="text-2xl font-bold  items-center text-white">chatapp</h2>
+        <Link
+          to="/"
+          className="flex items-center  text-xl font-bold text-white"
+          activeProps={{
+            className:
+              'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+          }}
+        >
+          ChatAPP
+        </Link>
+
         <div className="flex items-center gap-3">
           <button className="cursor-pointer" onClick={onOpenNewChat}>
             <IoChatboxEllipsesOutline size={24} color="white" />
