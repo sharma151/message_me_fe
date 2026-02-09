@@ -23,16 +23,6 @@ class ChatService {
     }
   }
 
-  //Update UserName
-  static async updateUserName(name: string) {
-    try {
-      const response = await httpBase.put('/users/update-profile', { name })
-      return response.data
-    } catch (error) {
-      throw handleError(error as AxiosError)
-    }
-  }
-
   //fetch chats messages
   static async fetchChats(chatId: number) {
     try {

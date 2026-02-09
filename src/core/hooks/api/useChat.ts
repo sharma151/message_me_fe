@@ -14,12 +14,7 @@ export const useChat = (chatId?: number) => {
     queryFn: ChatService.fetchAvailableUsers,
   })
 
-  //Update UserName
-  const updateUserName = useMutation({
-    mutationFn: async (name: string) => {
-      await ChatService.updateUserName(name)
-    },
-  })
+
 
   //Fetch Chats History
   const chatMessagesQuery = useQuery({
@@ -44,8 +39,6 @@ export const useChat = (chatId?: number) => {
     isFetchingAllUsers: fetchAllUsers.isFetching,
     fetchAvailableUsers: fetchAvailableUsers.data,
     isFetchingAvailableUsers: fetchAvailableUsers.isFetching,
-    updateUserName: updateUserName.mutate,
-    isUpdatingUserName: updateUserName.isPending,
     messages: chatMessagesQuery.data || [],
     isLoadingMessages: chatMessagesQuery.isLoading,
     createChatRoom: createChatRoomMutation.mutate,

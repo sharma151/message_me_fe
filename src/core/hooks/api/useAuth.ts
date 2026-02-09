@@ -42,12 +42,21 @@ export const useAuth = () => {
     },
   })
 
-
   //Fetch LoggedIn user PROFILE DETAIL
 
   const UserProfileDetail = useQuery({
     queryKey: ['profiledetail'],
     queryFn: AuthService.fetchLoggedinProfile,
+  })
+
+  //Update UserName
+  const updateUserName = useMutation({
+    mutationFn: async (name: string) => {
+      await AuthService.updateUserName(name)
+    },
+    onSuccess: () => {
+      UserProfileDetail.refetch()
+    },
   })
 
   return {
@@ -56,5 +65,7 @@ export const useAuth = () => {
     register: registerMutation.mutate,
     isRegistering: registerMutation.isPending,
     userdetail: UserProfileDetail.data,
+    updateUserName: updateUserName.mutate,
+    isUpdatingUserName: updateUserName.isPending,
   }
 }

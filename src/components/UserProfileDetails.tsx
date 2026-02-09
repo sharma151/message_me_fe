@@ -2,13 +2,32 @@ import { HiOutlinePencilAlt } from 'react-icons/hi'
 import { FaArrowLeft } from 'react-icons/fa'
 import { useAuth } from '@/core/hooks/api/useAuth'
 import DefaultUser from '@/components/DefaultUser'
+import { useState } from 'react'
+import { BsCheckLg } from 'react-icons/bs'
+import { MdClose } from 'react-icons/md'
 
 interface AllUsersListProps {
   onBack: () => void
 }
 
 const UserDetailCard = ({ onBack }: AllUsersListProps) => {
-  const { userdetail } = useAuth()
+  const { userdetail, updateUserName } = useAuth()
+
+  const [isRenaming, setIsRenaming] = useState(false)
+  const [tempName, setTempName] = useState('')
+
+  const userName = userdetail?.user?.name
+  const handleRenameSave = () => {
+    if (userName !== tempName) {
+      updateUserName(tempName.trim())
+    }
+    setIsRenaming(false)
+  }
+
+  const handleEditUsername = () => {
+    setTempName(userName || '')
+    setIsRenaming(true)
+  }
 
   return (
     <div className="bg-gray-800 text-[#e9edef] h-screen w-full mx-auto flex flex-col font-sans overflow-hidden">
@@ -37,13 +56,35 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
             <label className="text-[#00a884] text-sm block mb-4">
               User name
             </label>
-            <div className="flex items-center justify-between">
-              <span className="text-lg">{userdetail?.user?.name}</span>
-              <HiOutlinePencilAlt
-                size={20}
-                className="text-[#8696a0] cursor-pointer hover:text-[#e9edef]"
-              />
-            </div>
+            {isRenaming ? (
+              <div className="flex items-center gap-1 flex-1">
+                <input
+                  autoFocus
+                  className="border-b border-gray-500 outline-none font-semibold text-lg px-1 w-full max-w-50"
+                  value={tempName}
+                  onChange={(e) => setTempName(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleRenameSave()}
+                />
+                <button onClick={handleRenameSave} className="text-green-600">
+                  <BsCheckLg size={18} />
+                </button>
+                <button
+                  onClick={() => setIsRenaming(false)}
+                  className="text-red-500"
+                >
+                  <MdClose size={18} />
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <span className="text-lg">{userName}</span>
+                <HiOutlinePencilAlt
+                  size={20}
+                  className="text-[#8696a0] cursor-pointer hover:text-[#e9edef]"
+                  onClick={handleEditUsername}
+                />
+              </div>
+            )}
           </section>
 
           {/* Full name */}
@@ -53,10 +94,6 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
             </label>
             <div className="flex items-center justify-between">
               <span className="text-lg">{userdetail?.user?.name}</span>
-              <HiOutlinePencilAlt
-                size={20}
-                className="text-[#8696a0] cursor-pointer hover:text-[#e9edef]"
-              />
             </div>
           </section>
 
@@ -67,10 +104,6 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
               <span className="text-lg truncate max-w-[75%]">
                 {userdetail?.user?.email || 'Hey there! I am using WhatsApp.'}
               </span>
-              <HiOutlinePencilAlt
-                size={20}
-                className="text-[#8696a0] cursor-pointer hover:text-[#e9edef]"
-              />
             </div>
           </section>
         </div>

@@ -45,5 +45,17 @@ class AuthService {
       throw handleError(error as AxiosError)
     }
   }
+
+  //Update UserName
+  static async updateUserName(username: string) {
+    try {
+      const response = await httpBase.post('/users/update-profile', {
+        username,
+      })
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
 }
 export default AuthService
