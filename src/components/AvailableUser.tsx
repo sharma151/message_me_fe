@@ -2,6 +2,9 @@ import type { AvailableUsersResponse } from '@/@types/response/api-response'
 import { useChat } from '@/core/hooks/api/useChat'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import DefaultUser from '@/components/DefaultUser'
+import CustomDropdown from './UI/CustomDropdown'
+import { IoIosArrowDown } from 'react-icons/io'
+import { RiLoader2Line } from 'react-icons/ri'
 
 const AvailableUser = () => {
   const { fetchAvailableUsers, isFetchingAvailableUsers } = useChat()
@@ -16,8 +19,14 @@ const AvailableUser = () => {
     })
   }
 
+  const items = [{ key: 'Delete', label: 'Delete' }]
+
   if (isFetchingAvailableUsers) {
-    return <div className="p-2 text-gray-400">Loading...</div>
+    return (
+      <div className="flex justify-center items-center h-full  bg-gray-800 ">
+        <RiLoader2Line size={25} color='gray' className='animate-spin' />
+      </div>
+    )
   }
 
   return (
@@ -31,26 +40,40 @@ const AvailableUser = () => {
           return (
             <div
               key={user.chatId}
-              onClick={() => handleRowClick(user.chatId)}
+              onClick={(e) => {
+                handleRowClick(user.chatId)
+                e.stopPropagation()
+              }}
               className={`
-                flex items-center space-x-3 p-2 rounded-lg cursor-pointer
+                flex items-center  justify-between space-x-3 p-2 rounded-lg cursor-pointer
                 transition-colors
-                hover:bg-gray-300
+                hover:bg-gray-300 group
                 ${isActive ? 'bg-gray-300' : ''}
               `}
             >
-              <span>
-                <DefaultUser />
-              </span>
+              <div className="flex gap-2">
+                <span>
+                  <DefaultUser />
+                </span>
 
-              <div className="flex flex-col overflow-hidden">
-                <span className="font-medium text-white">
-                  {user.receiverName}
-                </span>
-                <span className="text-sm text-gray-200 truncate max-w-25">
-                  {user.message}
-                </span>
+                <div className="flex flex-col overflow-hidden">
+                  <span className="font-medium text-white">
+                    {user.receiverName}
+                  </span>
+                  <span className="text-sm text-gray-200 truncate max-w-25">
+                    {user.message}
+                  </span>
+                </div>
               </div>
+
+              <CustomDropdown
+                triggerContent={<IoIosArrowDown size={17} color="gray" />}
+                buttonClassName="opacity-0 group-hover:opacity-100 transition-opacity"
+                items={items}
+                onMenuClick={() => {
+                  alert('Delete clicked for user')
+                }}
+              />
             </div>
           )
         })}

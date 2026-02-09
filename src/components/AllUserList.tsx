@@ -3,6 +3,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { useChat } from '@/core/hooks/api/useChat'
 import { FaArrowLeft } from 'react-icons/fa'
 import DefaultUser from './DefaultUser'
+import { RiLoader2Line } from 'react-icons/ri'
 
 interface AllUsersListProps {
   onBack?: () => void
@@ -20,7 +21,11 @@ const AllUserList = ({ onBack }: AllUsersListProps) => {
   }
 
   if (isFetchingAllUsers) {
-    return <div>Loading users...</div>
+    return (
+      <div className="flex justify-center items-center h-full  bg-gray-800 ">
+        <RiLoader2Line size={25} color="gray" className="animate-spin" />
+      </div>
+    )
   }
   return (
     <>

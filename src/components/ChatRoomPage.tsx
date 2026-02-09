@@ -7,6 +7,7 @@ import { useChat } from '@/core/hooks/api/useChat'
 import { PiPlusBold } from 'react-icons/pi'
 import { IoSend } from 'react-icons/io5'
 import { MdInsertEmoticon } from 'react-icons/md'
+import { RiLoader2Line } from 'react-icons/ri'
 
 type Message = {
   id: number
@@ -108,7 +109,11 @@ const ChatRoomPage = () => {
   }
 
   if (isLoadingMessages) {
-    return <div style={{ padding: 20 }}>Loading chat history...</div>
+    return (
+      <div className="flex justify-center items-center h-full  bg-gray-800 ">
+        <RiLoader2Line size={25} color="gray" className="animate-spin" />
+      </div>
+    )
   }
 
   return (

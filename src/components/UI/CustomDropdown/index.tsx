@@ -58,7 +58,7 @@ const CustomDropdown: React.FC<ReusableDropdownProps> = ({
             disabled={item.disabled}
             onClick={() => onMenuClick?.(item)}
             className={twMerge(
-              'cursor-pointer flex items-center gap-2 text-white ',
+              'cursor-pointer flex items-center gap-2 text-gray-100 bg-gray-600! hover:text-white!',
               item.className,
             )}
           >
