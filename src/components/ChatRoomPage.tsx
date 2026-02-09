@@ -4,6 +4,9 @@ import { socketService } from '@/socket/socket'
 import { useAuthStore } from '@/store/auth.store'
 import ChatRoomNav from './ChatRoomNav'
 import { useChat } from '@/core/hooks/api/useChat'
+import { PiPlusBold } from 'react-icons/pi'
+import { IoSend } from 'react-icons/io5'
+import { MdInsertEmoticon } from 'react-icons/md'
 
 type Message = {
   id: number
@@ -109,13 +112,13 @@ const ChatRoomPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-[100vh] bg-[#efeae2]">
+    <div className="flex flex-col h-screen   bg-gray-800  bg-doodle-gray">
       <ChatRoomNav />
 
       {/* Messages Area */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto px-4 py-2 flex flex-col gap-2"
+        className="flex-1 overflow-y-auto px-4 py-2 flex flex-col gap-2 custom-scrollbar"
       >
         {messages.map((msg: Message) => {
           const isMe = Number(msg?.senderId) === Number(userId)
@@ -128,11 +131,11 @@ const ChatRoomPage = () => {
               }}
             >
               <div
-                className={`max-w- rounded-lg px-3 py-2 text-sm shadow relative flex gap-2 group
+                className={`max-w-fit rounded-lg px-2 py-0.5 text-sm shadow relative flex  group
                   ${
                     isMe
-                      ? 'bg-[#dcf8c6] rounded-tr-none'
-                      : 'bg-white rounded-tl-none'
+                      ? 'bg-green-900 rounded-tr-none'
+                      : 'bg-gray-600 rounded-tl-none'
                   }
                 `}
               >
@@ -144,12 +147,12 @@ const ChatRoomPage = () => {
                   )}
 
                   {msg.content && (
-                    <p className="text-gray-900 wrap-break-words leading-relaxed">
+                    <p className="text-white wrap-break-words leading-relaxed">
                       {msg.content}
                     </p>
                   )}
 
-                  <p className="text-[10px] text-gray-500 text-right mt-1 ml-4">
+                  <p className="text-[10px] text-gray-200 text-right ml-4">
                     {new Date(msg.createdAt).toLocaleTimeString([], {
                       hour: '2-digit',
                       minute: '2-digit',
@@ -163,7 +166,7 @@ const ChatRoomPage = () => {
 
         {/* TYPING INDICATOR */}
         {isTyping && (
-          <div className="self-start bg-white px-4 py-2 rounded-lg rounded-tl-none shadow-sm flex items-center gap-1 max-w-[100px]">
+          <div className="self-start bg-white px-4 py-2 rounded-lg rounded-tl-none shadow-sm flex items-center gap-1 max-w-25">
             <span className="text-xs text-gray-500 italic">typing</span>
             <div className="flex gap-1">
               <span className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></span>
@@ -175,28 +178,33 @@ const ChatRoomPage = () => {
       </div>
 
       {/* Input Area */}
-      <div
-        style={{
-          padding: 16,
-          background: '#fff',
-          borderTop: '1px solid #ddd',
-          display: 'flex',
-          gap: 10,
-        }}
-      >
-        <input
-          value={text}
-          onChange={handleInputChange}
-          placeholder="Type a message..."
-          className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-1 "
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-        />
-        <button
-          onClick={sendMessage}
-          className="px-4 py-2.5 rounded-full bg-blue-500 text-white font-bold cursor-pointer"
-        >
-          Send
-        </button>
+      <div className="flex items-center gap-2 p-3">
+        <div className="flex flex-1 items-center bg-gray-600 rounded-full px-3 py-1">
+          <button className="p-2 text-[#8696a0] hover:text-white transition">
+            <PiPlusBold size={24} />
+          </button>
+
+          <button className="p-2 text-[#8696a0] hover:text-white transition">
+            <MdInsertEmoticon size={24} />
+          </button>
+
+          <input
+            type="text"
+            value={text}
+            onChange={handleInputChange}
+            placeholder="Type a message"
+            className="flex-1 bg-transparent border-none focus:outline-none text-[#e9edef] px-2 py-2 placeholder-gray-200"
+            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          />
+        </div>
+        {text.trim().length > 0 && (
+          <button
+            onClick={sendMessage}
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-[#00a884] text-[#111b21] hover:bg-[#06cf9c] transition-colors"
+          >
+            <IoSend size={20} />
+          </button>
+        )}
       </div>
     </div>
   )

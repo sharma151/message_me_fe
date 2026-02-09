@@ -1,12 +1,15 @@
 import type { AvailableUsersResponse } from '@/@types/response/api-response'
-import defaultimage from '@/assets/default-user.webp'
 import { useChat } from '@/core/hooks/api/useChat'
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useParams } from '@tanstack/react-router'
+import DefaultUser from '@/components/DefaultUser'
+
 const AvailableUser = () => {
   const { fetchAvailableUsers, isFetchingAvailableUsers } = useChat()
-
   const navigate = useNavigate()
-  const handleRowClick = ({ chatID }: { chatID: number }) => {
+
+  const { chatId } = useParams({ strict: false })
+
+  const handleRowClick = (chatID: number) => {
     navigate({
       to: '/chats/$chatId',
       params: { chatId: chatID.toString() },
@@ -14,35 +17,45 @@ const AvailableUser = () => {
   }
 
   if (isFetchingAvailableUsers) {
-    return <div>Loading...</div>
+    return <div className="p-2 text-gray-400">Loading...</div>
   }
 
   return (
-    <>
-      <div className="px-2">
-        <h2 className="text-lg font-semibold p-2">Available user</h2>
-        <div className="space-y-1 overflow-y-auto max-h-96">
-          {fetchAvailableUsers?.map((user: AvailableUsersResponse) => (
+    <div className="px-2">
+      <h2 className="text-lg font-semibold p-2 text-white">Available user</h2>
+
+      <div className="space-y-1 overflow-y-auto max-h-96">
+        {fetchAvailableUsers?.map((user: AvailableUsersResponse) => {
+          const isActive = chatId === user.chatId.toString()
+
+          return (
             <div
               key={user.chatId}
-              onClick={() => handleRowClick({ chatID: user.chatId })}
-              className=" flex items-center border-b  border-gray-200 space-x-3 p-2 hover:rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
+              onClick={() => handleRowClick(user.chatId)}
+              className={`
+                flex items-center space-x-3 p-2 rounded-lg cursor-pointer
+                transition-colors
+                hover:bg-gray-300
+                ${isActive ? 'bg-gray-300' : ''}
+              `}
             >
               <span>
-                <img
-                  src={defaultimage || '/default-avatar.png'}
-                  className="w-10 h-10 rounded-full"
-                />
+                <DefaultUser />
               </span>
-              <div className='flex flex-col'>
-                <span className="font-medium">{user.receiverName}</span>{' '}
-                <span className="text-sm text-gray-500 block truncate max-w-[100px]">{user.message}</span>
+
+              <div className="flex flex-col overflow-hidden">
+                <span className="font-medium text-white">
+                  {user.receiverName}
+                </span>
+                <span className="text-sm text-gray-200 truncate max-w-25">
+                  {user.message}
+                </span>
               </div>
             </div>
-          ))}
-        </div>
+          )
+        })}
       </div>
-    </>
+    </div>
   )
 }
 

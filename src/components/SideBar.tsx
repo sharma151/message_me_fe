@@ -8,14 +8,16 @@ const SideBar = () => {
   const { onOpen, onClose, isOpen, onUserDetailClose, isUserDetailOpen } =
     useModalStore()
   return (
-    <div className="w-full border-r border-gray-400">
-      <SideBarNav onOpenNewChat={onOpen} />
+    <div className="w-full border-r border-gray-400 bg-gray-800 h-full ">
       {isUserDetailOpen ? (
         <UserDetailCard onBack={onUserDetailClose} />
       ) : isOpen ? (
         <AllUserList onBack={onClose} />
       ) : (
-        <AvailableUser />
+        <>
+          <SideBarNav onOpenNewChat={onOpen} />
+          <AvailableUser />
+        </>
       )}
     </div>
   )

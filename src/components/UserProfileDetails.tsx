@@ -11,14 +11,14 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
   const { userdetail } = useAuth()
 
   return (
-    <div className="bg-sidebar text-[#e9edef] h-screen w-full mx-auto flex flex-col font-sans overflow-hidden">
+    <div className="bg-gray-800 text-[#e9edef] h-screen w-full mx-auto flex flex-col font-sans overflow-hidden">
       {/* Scrollable container */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar bg-sidebar">
+      <div className="flex-1 overflow-y-auto custom-scrollbar bg-gray-800">
         {/* Header */}
-        <div className="flex items-center p-5 pt-8 sticky top-0 bg-sidebar z-10">
+        <div className="flex items-center p-5 pt-8 sticky top-0 bg-gray-800 z-10">
           <button
             onClick={onBack}
-            className="p-2 rounded-full transition-colors cursor-pointer hover:bg-gray-800"
+            className="p-2 rounded-full transition-colors cursor-pointer hover:bg-gray-600"
           >
             <FaArrowLeft size={16} />
           </button>
