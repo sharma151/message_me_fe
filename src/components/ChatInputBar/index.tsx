@@ -58,14 +58,14 @@ const ChatInputBar = ({ chatId, userId }: ChatInputBarProps) => {
 
   return (
     <div className="flex items-center gap-2 p-3">
-      <div className="flex flex-1 items-center bg-gray-600 rounded-full px-3 py-1">
-        <button className="p-2 text-[#8696a0] hover:text-white transition">
+      <div className="flex flex-1 items-center bg-gray-600 rounded-full px-1.5 py-1 ">
+        <button className="p-2 text-white transition cursor-pointer rounded-full  hover:rounded-full hover:bg-gray-300 ">
           <PiPlusBold size={24} />
         </button>
 
-        <button className="p-2 text-[#8696a0] hover:text-white transition">
-          <ChatPicker onSelect={handlePickerSelect} />
-        </button>
+        {/* <button className="p-2 rounded-full border text-[#8696a0] hover:text-white transition "> */}
+        <ChatPicker onSelect={handlePickerSelect} />
+        {/* </button> */}
 
         <input
           type="text"
@@ -80,7 +80,7 @@ const ChatInputBar = ({ chatId, userId }: ChatInputBarProps) => {
       {text.trim().length > 0 && (
         <button
           onClick={sendMessage}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-[#00a884] text-[#111b21] hover:bg-[#06cf9c] transition-colors"
+          className="flex items-center justify-center w-11 h-11 rounded-full bg-[#00a884] text-[#111b21] hover:bg-[#06cf9c] transition-colors"
         >
           <IoSend size={20} />
         </button>
