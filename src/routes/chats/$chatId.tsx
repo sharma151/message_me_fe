@@ -1,4 +1,4 @@
-import ChatRoomPage from '@/components/ChatRoomPage'
+import ChatRoomPage from '@/components/ChatRoomPage/ChatRoomPage'
 import AppLayout from '@/Layout/AppLayout'
 import { createFileRoute } from '@tanstack/react-router'
 
