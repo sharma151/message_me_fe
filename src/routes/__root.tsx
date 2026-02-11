@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/store/auth.store'
 import { Outlet, createRootRoute, redirect } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { Progress } from '@/components/Progress'
+import { Progress } from '@/components/ProgressLoader'
 
 export const Route = createRootRoute({
   beforeLoad: ({ location }) => {
