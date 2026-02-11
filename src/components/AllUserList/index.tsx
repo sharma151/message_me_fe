@@ -2,7 +2,7 @@ import type { UserProfileResponse } from '@/@types/forms/auth'
 import { useNavigate } from '@tanstack/react-router'
 import { useChat } from '@/core/hooks/api/useChat'
 import { FaArrowLeft } from 'react-icons/fa'
-import DefaultUser from './DefaultUser'
+import DefaultUserIcon from '@/components/DefaultUserIcon'
 import { RiLoader2Line } from 'react-icons/ri'
 
 interface AllUsersListProps {
@@ -47,7 +47,7 @@ const AllUserList = ({ onBack }: AllUsersListProps) => {
                 onClick={() => handleRowClick({ chatID: user.id })}
                 className=" flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-300 cursor-pointer transition-colors"
               >
-                <DefaultUser />
+                <DefaultUserIcon />
                 <span className="font-medium text-white">{user.name}</span>{' '}
               </div>
             ))

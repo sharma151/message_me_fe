@@ -1,5 +1,5 @@
 import { useModalStore } from '@/store/modal.store'
-import DefaultUser from '@/components/DefaultUser'
+import DefaultUserIcon from '@/components/DefaultUserIcon'
 
 const UserDetailActionButton = () => {
   const { onUserDetailOpen } = useModalStore()
@@ -7,7 +7,7 @@ const UserDetailActionButton = () => {
     <>
       <div className="w-18 shrink-0 flex flex-col  items-center justify-end  ">
         <div className="" onClick={onUserDetailOpen}>
-          <DefaultUser  size={40} iconSize={20}/>
+          <DefaultUserIcon size={40} iconSize={20} />
         </div>
       </div>
     </>

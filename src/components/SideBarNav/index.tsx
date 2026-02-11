@@ -1,4 +1,4 @@
-import CustomDropdown from '@/components/UI/CustomDropdown'
+import CustomDropdown from '@/components/CustomDropdown'
 import { useToast } from '@/core/hooks/common/useToast'
 import { useAuthStore } from '@/store/auth.store'
 import { Link, useNavigate } from '@tanstack/react-router'

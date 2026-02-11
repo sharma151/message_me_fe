@@ -1,8 +1,8 @@
-import SideBarNav from '@/components/SidebarNav'
-import AllUserList from './AllUserList'
+import SideBarNav from '@/components/SideBarNav'
+import AllUserList from '@/components/AllUserList/index'
 import { useModalStore } from '@/store/modal.store'
-import AvailableUser from './AvailableUser'
-import UserDetailCard from './UserProfileDetails'
+import AvailableUser from '@/components/AvailableUsers/index'
+import UserDetailCard from '@/components/UserProfileDetails/index'
 
 const SideBar = () => {
   const { onOpen, onClose, isOpen, onUserDetailClose, isUserDetailOpen } =

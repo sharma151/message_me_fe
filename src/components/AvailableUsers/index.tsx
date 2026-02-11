@@ -1,8 +1,8 @@
 import type { AvailableUsersResponse } from '@/@types/response/api-response'
 import { useChat } from '@/core/hooks/api/useChat'
 import { useNavigate, useParams } from '@tanstack/react-router'
-import DefaultUser from '@/components/DefaultUser'
-import CustomDropdown from './UI/CustomDropdown'
+import DefaultUserIcon from '@/components/DefaultUserIcon'
+import CustomDropdown from '@/components/CustomDropdown/index'
 import { IoIosArrowDown } from 'react-icons/io'
 import { RiLoader2Line } from 'react-icons/ri'
 
@@ -24,7 +24,7 @@ const AvailableUser = () => {
   if (isFetchingAvailableUsers) {
     return (
       <div className="flex justify-center items-center h-full  bg-gray-800 ">
-        <RiLoader2Line size={25} color='gray' className='animate-spin' />
+        <RiLoader2Line size={25} color="gray" className="animate-spin" />
       </div>
     )
   }
@@ -53,7 +53,7 @@ const AvailableUser = () => {
             >
               <div className="flex gap-2">
                 <span>
-                  <DefaultUser />
+                  <DefaultUserIcon />
                 </span>
 
                 <div className="flex flex-col overflow-hidden">

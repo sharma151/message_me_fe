@@ -2,14 +2,14 @@ import { useEffect, useState, useRef } from 'react'
 import { useParams } from '@tanstack/react-router'
 import { socketService } from '@/socket/socket'
 import { useAuthStore } from '@/store/auth.store'
-import ChatRoomNav from './ChatRoomNav'
+import ChatRoomNav from '@/components/ChatRoomNav/index'
 import { useChat } from '@/core/hooks/api/useChat'
 import { PiPlusBold } from 'react-icons/pi'
 import { IoSend } from 'react-icons/io5'
-import { MdInsertEmoticon } from 'react-icons/md'
 import { RiLoader2Line } from 'react-icons/ri'
-import CustomDropdown from './UI/CustomDropdown'
+import CustomDropdown from '@/components/CustomDropdown'
 import { FaAngleDown } from 'react-icons/fa'
+import { ChatPicker } from '@/components/ChatEmojiPicker/index'
 
 type Message = {
   id: number
@@ -120,6 +120,20 @@ const ChatRoomPage = () => {
 
   const items = [{ key: 'Delete', label: 'Unsend' }]
 
+  const handlePickerSelect = (content: string, type: 'text' | 'gif') => {
+    if (type === 'gif') {
+      // If it's a GIF, we send it immediately
+      socketService.emit('sendMessage', {
+        chatId: parsedChatId,
+        senderId: userId,
+        content: content, // The GIF URL
+      })
+    } else {
+      // If it's an emoji, we just append it to the current text input
+      setText((prev) => prev + content)
+    }
+  }
+
   return (
     <div className="flex flex-col h-screen   bg-gray-800  bg-doodle-gray">
       <ChatRoomNav />
@@ -206,7 +220,7 @@ const ChatRoomPage = () => {
           </button>
 
           <button className="p-2 text-[#8696a0] hover:text-white transition">
-            <MdInsertEmoticon size={24} />
+            <ChatPicker onSelect={handlePickerSelect} />
           </button>
 
           <input

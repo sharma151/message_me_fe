@@ -1,6 +1,6 @@
 import { IoPerson } from 'react-icons/io5'
 
-const DefaultUser = ({
+const DefaultUserIcon = ({
   size = 48, // circle size (px)
   bgColor = '#242626', // background color
   iconColor = '#bfbfbf', // icon color
@@ -17,7 +17,7 @@ const DefaultUser = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        border:'1px solid #2E2F2F'
+        border: '1px solid #2E2F2F',
       }}
     >
       <Icon size={iconSize} color={iconColor} />
@@ -25,4 +25,4 @@ const DefaultUser = ({
   )
 }
 
-export default DefaultUser
+export default DefaultUserIcon
