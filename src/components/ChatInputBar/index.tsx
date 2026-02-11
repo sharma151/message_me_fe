@@ -63,9 +63,7 @@ const ChatInputBar = ({ chatId, userId }: ChatInputBarProps) => {
           <PiPlusBold size={24} />
         </button>
 
-        {/* <button className="p-2 rounded-full border text-[#8696a0] hover:text-white transition "> */}
         <ChatPicker onSelect={handlePickerSelect} />
-        {/* </button> */}
 
         <input
           type="text"
