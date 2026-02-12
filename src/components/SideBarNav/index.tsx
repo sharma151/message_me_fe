@@ -38,15 +38,19 @@ const SideBarNav = ({ onOpenNewChat }: SideBarNavProps) => {
         </Link>
 
         <div className="flex items-center gap-3">
-          <button className="cursor-pointer" onClick={onOpenNewChat}>
+          <button
+            className="cursor-pointer p-1.5 hover:bg-gray-300 rounded-full"
+            onClick={onOpenNewChat}
+          >
             <img src={AddChatUser} alt="Chat" className="w-6 h-6 text-white" />
           </button>
 
           <div>
             <CustomDropdown
               items={items}
-              triggerContent={<BsThreeDotsVertical size={22} color="white" />}
+              triggerContent={<BsThreeDotsVertical size={20} color="white" />}
               onMenuClick={handleLogoutUser}
+              buttonClassName="p-1.5 rounded-full hover:bg-gray-300"
             />
           </div>
         </div>

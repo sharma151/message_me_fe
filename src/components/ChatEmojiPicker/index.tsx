@@ -37,7 +37,7 @@ export const ChatPicker = ({ onSelect }: ChatPickerProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="cursor-pointer hover:border hover:p-1 hover:rounded-full hover:bg-gray-300 hover:border-gray-500">
+        <button className="cursor-pointer p-2.5  hover:rounded-full hover:bg-gray-300 ">
           <img src={EmojiviewIcon} alt="Chat" className="w-5.5 h-5.5" />
         </button>
       </PopoverTrigger>
