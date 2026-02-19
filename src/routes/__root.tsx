@@ -28,7 +28,7 @@ function RootLayout() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsInitializing(false)
-    }, 4000)
+    }, 3000)
 
     return () => clearTimeout(timer)
   }, [])
