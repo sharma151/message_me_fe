@@ -2,19 +2,23 @@ import { HiOutlinePencilAlt } from 'react-icons/hi'
 import { FaArrowLeft } from 'react-icons/fa'
 import { useAuth } from '@/core/hooks/api/useAuth'
 import DefaultUserIcon from '@/components/DefaultUserIcon'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { BsCheckLg } from 'react-icons/bs'
 import { MdClose } from 'react-icons/md'
+import { IoCamera } from 'react-icons/io5'
 
 interface AllUsersListProps {
   onBack: () => void
 }
 
 const UserDetailCard = ({ onBack }: AllUsersListProps) => {
-  const { userdetail, updateUserName } = useAuth()
+  const { userdetail, updateUserName, UploadAvatar, UpdateAvatar } = useAuth()
 
   const [isRenaming, setIsRenaming] = useState(false)
   const [tempName, setTempName] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const image = `http://localhost:5000/uploadsimages/${userdetail?.user?.profileimg}`
 
   const userName = userdetail?.user?.name
   const handleRenameSave = () => {
@@ -27,6 +31,15 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
   const handleEditUsername = () => {
     setTempName(userName || '')
     setIsRenaming(true)
+  }
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleUploadavatar = (formData: FormData) => {
+    const hasProfile = Boolean(userdetail?.user?.profileimg)
+    return hasProfile ? UpdateAvatar(formData) : UploadAvatar(formData)
   }
 
   return (
@@ -45,8 +58,43 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
         </div>
 
         {/* Avatar */}
-        <div className="flex flex-col items-center my-8">
-          <DefaultUserIcon size={190} iconSize={60} />
+        
+        <div className="flex flex-col items-center my-8 relative">
+          <div className="relative group mb-4">
+            <div className="w-48 h-48 rounded-full overflow-hidden border-none bg-gray-800">
+              {userdetail?.user?.profileimg ? (
+                <img
+                  src={image}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <DefaultUserIcon size={190} iconSize={60} />
+              )}
+            </div>
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) {
+                  const formData = new FormData()
+                  formData.append('file', file)
+
+                  handleUploadavatar(formData)
+                }
+              }}
+            />
+            <button
+              onClick={handleButtonClick}
+              className="absolute bottom-2 left-2 bg-[#00a884] p-3 rounded-full shadow-lg hover:bg-[#06cf9c] transition-colors"
+              title="Edit Avatar"
+            >
+              <IoCamera size={20} className="text-white" />
+            </button>
+          </div>
         </div>
 
         {/* Content */}
