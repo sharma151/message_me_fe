@@ -42,5 +42,27 @@ class ChatService {
       throw handleError(error as AxiosError)
     }
   }
+
+  //Delete Message
+  static async deleteMessage(msgId: number, chatId: number) {
+    try {
+      const response = await httpBase.delete(`/chat/${msgId}/${chatId}`)
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+  //Edit Message
+
+  static async editMessage(msgId: number, chatId: number, content: string) {
+    try {
+      const response = await httpBase.patch(`/chat/${msgId}/${chatId}`, {
+        content,
+      })
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
 }
 export default ChatService

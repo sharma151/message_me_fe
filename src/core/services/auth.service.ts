@@ -57,5 +57,34 @@ class AuthService {
       throw handleError(error as AxiosError)
     }
   }
+
+  static async UploadAvatar(formData: FormData) {
+    try {
+      const response = await httpBase.post('/auth/uploadAvatar', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      return response
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+  static async UpdateAvatar(formData: FormData) {
+    try {
+      const response = await httpBase.patch(
+        '/auth/update-profile-picture',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      )
+      return response
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
 }
 export default AuthService

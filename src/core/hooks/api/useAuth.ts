@@ -59,6 +59,26 @@ export const useAuth = () => {
     },
   })
 
+  const UploadAvatar = useMutation({
+    mutationFn: async (formData: FormData) =>
+      await AuthService.UploadAvatar(formData),
+
+    onSuccess: () => {
+      UserProfileDetail.refetch()
+      // Success('Avatar Updated Succesfully')
+    },
+  })
+
+  const UpdateAvatar = useMutation({
+    mutationFn: async (formData: FormData) =>
+      await AuthService.UpdateAvatar(formData),
+
+    onSuccess: () => {
+      UserProfileDetail.refetch()
+      Success('Avatar Updated Succesfully')
+    },
+  })
+
   return {
     login: loginMutation.mutate,
     isLoggingIn: loginMutation.isPending,
@@ -67,5 +87,9 @@ export const useAuth = () => {
     userdetail: UserProfileDetail.data,
     updateUserName: updateUserName.mutate,
     isUpdatingUserName: updateUserName.isPending,
+    UpdateAvatar: UpdateAvatar.mutate,
+    isAvatarUpdating: UpdateAvatar.isPending,
+    UploadAvatar: UploadAvatar.mutate,
+    isAvatarUploading: UploadAvatar.isPending,
   }
 }
