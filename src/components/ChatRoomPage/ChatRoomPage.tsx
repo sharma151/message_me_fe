@@ -5,9 +5,11 @@ import { useAuthStore } from '@/store/auth.store'
 import ChatRoomNav from '@/components/ChatRoomNav/index'
 import { useChat } from '@/core/hooks/api/useChat'
 import { RiLoader2Line } from 'react-icons/ri'
-import CustomDropdown from '@/components/CustomDropdown'
+import CustomDropdown, { type DropdownItem } from '@/components/CustomDropdown'
 import { FaAngleDown } from 'react-icons/fa'
 import ChatInputBar from '@/components/ChatInputBar'
+import { BsCheckLg } from 'react-icons/bs'
+import { MdClose } from 'react-icons/md'
 
 type Message = {
   id: number
@@ -23,14 +25,21 @@ type Message = {
 const ChatRoomPage = () => {
   const { chatId } = useParams({ strict: false })
   const parsedChatId = Number(chatId)
-  const { messages, isLoadingMessages, queryClient } = useChat(parsedChatId)
+  const {
+    messages,
+    isLoadingMessages,
+    queryClient,
+    deleteMessage,
+    editMessage,
+  } = useChat(parsedChatId)
 
   const userId = useAuthStore((state) => state.user?.id)
-
 
   const [isTyping, setIsTyping] = useState(false)
 
   const scrollRef = useRef<HTMLDivElement>(null)
+  const [editingMessageId, setEditingMessageId] = useState<number | null>(null)
+  const [tempMsg, setTempMsg] = useState('')
 
   useEffect(() => {
     if (!parsedChatId || !userId) return
@@ -82,8 +91,39 @@ const ChatRoomPage = () => {
     )
   }
 
-  const items = [{ key: 'Delete', label: 'Unsend' }]
+  const items = [
+    { key: 'edit', label: 'Edit' },
+    { key: 'Delete', label: 'Unsend' },
+  ]
 
+  const handleMenuClick = (
+    e: DropdownItem,
+    chatId: number,
+    msgId: number,
+    msgcontent: string,
+  ) => {
+    console.log(e.key)
+    if (e.key === 'Delete') {
+      deleteMessage({ msgId, chatId })
+    }
+    if (e.key === 'edit') {
+      setTempMsg(msgcontent || '')
+      setEditingMessageId(msgId)
+    }
+  }
+6
+  const handleEditMsgSave = () => {
+    if (!editingMessageId || !tempMsg.trim()) return
+
+    editMessage({
+      msgId: editingMessageId,
+      chatId: parsedChatId,
+      content: tempMsg,
+    })
+
+    setEditingMessageId(null)
+    setTempMsg('')
+  }
 
   return (
     <div className="flex flex-col h-screen   bg-gray-800  bg-doodle-gray">
@@ -96,6 +136,7 @@ const ChatRoomPage = () => {
       >
         {messages.map((msg: Message) => {
           const isMe = Number(msg?.senderId) === Number(userId)
+
           return (
             <div
               key={msg.id}
@@ -105,7 +146,7 @@ const ChatRoomPage = () => {
               }}
             >
               <div
-                className={`max-w-fit rounded-lg px-2 py-0.5 text-sm shadow relative flex  group
+                className={`max-w-fit rounded-lg px-2 py-0.5 text-sm shadow relative flex group
                   ${
                     isMe
                       ? 'bg-green-900 rounded-tr-none'
@@ -124,16 +165,39 @@ const ChatRoomPage = () => {
                       items={items}
                       buttonClassName="opacity-0 group-hover:opacity-100 absolute top-2 right-2 z-10 bg-white/50 rounded-full "
                       triggerContent={<FaAngleDown size={12} />}
-                      onMenuClick={() => {
-                        alert('clicked')
+                      onMenuClick={(e) => {
+                        handleMenuClick(e, Number(chatId), msg.id, msg.content)
                       }}
                     />
                   ) : (
                     ''
                   )}
-
-                  {msg.content && (
-                    <p className="text-white wrap-break-words leading-relaxed">
+                  {isMe && editingMessageId === msg.id ? (
+                    <div className="flex items-center gap-2 pr-4">
+                      <input
+                        autoFocus
+                        className="bg-transparent outline-none text-white font-medium text-sm flex-1 w-full"
+                        value={tempMsg}
+                        onChange={(e) => setTempMsg(e.target.value)}
+                        onKeyDown={(e) =>
+                          e.key === 'Enter' && handleEditMsgSave()
+                        }
+                      />
+                      <button
+                        onClick={handleEditMsgSave}
+                        className="text-green-600"
+                      >
+                        <BsCheckLg size={18} />
+                      </button>
+                      <button
+                        onClick={() => setEditingMessageId(null)}
+                        className="text-red-500"
+                      >
+                        <MdClose size={18} />
+                      </button>
+                    </div>
+                  ) : (
+                    <p className="text-white wrap-break-words leading-relaxed pr-4">
                       {msg.content}
                     </p>
                   )}
