@@ -14,8 +14,6 @@ export const useChat = (chatId?: number) => {
     queryFn: ChatService.fetchAvailableUsers,
   })
 
-
-
   //Fetch Chats History
   const chatMessagesQuery = useQuery({
     queryKey: ['chats', chatId],
@@ -34,6 +32,32 @@ export const useChat = (chatId?: number) => {
     },
   })
 
+  //Delete message
+  const deleteMessage = useMutation({
+    mutationFn: ({ msgId, chatId }: { msgId: number; chatId: number }) =>
+      ChatService.deleteMessage(msgId, chatId),
+    onSuccess: () => {
+      chatMessagesQuery.refetch()
+    },
+  })
+  //Edit Message
+  const editMessage = useMutation({
+    mutationFn: ({
+      msgId,
+      chatId,
+      content,
+    }: {
+      msgId: number
+      chatId: number
+      content: string
+    }) => {
+      return ChatService.editMessage(msgId, chatId, content)
+    },
+    onSuccess: () => {
+      chatMessagesQuery.refetch
+    },
+  })
+
   return {
     fetchAllUsers: fetchAllUsers.data,
     isFetchingAllUsers: fetchAllUsers.isFetching,
@@ -44,5 +68,7 @@ export const useChat = (chatId?: number) => {
     createChatRoom: createChatRoomMutation.mutate,
     isCreatingChatRoom: createChatRoomMutation.isPending,
     queryClient,
+    deleteMessage: deleteMessage.mutate,
+    editMessage: editMessage.mutate,
   }
 }
