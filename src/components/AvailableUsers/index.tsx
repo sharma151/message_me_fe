@@ -36,7 +36,6 @@ const AvailableUser = () => {
       <div className="space-y-1 overflow-y-auto max-h-96">
         {fetchAvailableUsers?.map((user: AvailableUsersResponse) => {
           const isActive = chatId === user.chatId.toString()
-
           return (
             <div
               key={user.chatId}
@@ -58,7 +57,7 @@ const AvailableUser = () => {
 
                 <div className="flex flex-col overflow-hidden">
                   <span className="font-medium text-white">
-                    {user.receiverName}
+                    {user.isGroup === false ? user.receiverName : user.name}
                   </span>
                   <span className="text-sm text-gray-200 truncate max-w-25">
                     {user.message}
