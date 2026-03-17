@@ -1,6 +1,10 @@
 import { handleError } from '@/utils/http.utils'
 import type { AxiosError } from 'axios'
 import httpBase from '@/core/services/httpBase'
+interface CreateGroupChatData {
+  chatName: string
+  receiverUserId: string[]
+}
 
 class ChatService {
   // fetchAllUsers
@@ -37,6 +41,18 @@ class ChatService {
   static async createChatRoom(receiverUserId: number) {
     try {
       const response = await httpBase.post('/chat/private', { receiverUserId })
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+
+  //create Group chat Room
+
+  static async createGroupChatRoom(data: CreateGroupChatData) {
+    try {
+      // We pass 'data' as the second argument
+      const response = await httpBase.post('/chat/group', data)
       return response.data
     } catch (error) {
       throw handleError(error as AxiosError)

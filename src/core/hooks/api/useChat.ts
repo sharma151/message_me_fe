@@ -32,6 +32,22 @@ export const useChat = (chatId?: number) => {
     },
   })
 
+  //create Group chat Room
+  const createGroupChatMutation = useMutation({
+    mutationFn: async (payload: {
+      chatName: string
+      receiverUserId: string[]
+    }) => {
+      return await ChatService.createGroupChatRoom(payload)
+    },
+    onSuccess: () => {
+      fetchAvailableUsers.refetch()
+    },
+    onError: (error) => {
+      console.error('Group creation failed:', error)
+    },
+  })
+
   //Delete message
   const deleteMessage = useMutation({
     mutationFn: ({ msgId, chatId }: { msgId: number; chatId: number }) =>
@@ -66,6 +82,8 @@ export const useChat = (chatId?: number) => {
     messages: chatMessagesQuery.data || [],
     isLoadingMessages: chatMessagesQuery.isLoading,
     createChatRoom: createChatRoomMutation.mutate,
+    createGroupChatMutation: createGroupChatMutation.mutate,
+    iscreateGroupChatPending: createGroupChatMutation.isPending,
     isCreatingChatRoom: createChatRoomMutation.isPending,
     queryClient,
     deleteMessage: deleteMessage.mutate,
