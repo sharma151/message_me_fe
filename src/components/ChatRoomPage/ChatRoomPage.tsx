@@ -155,7 +155,7 @@ const ChatRoomPage = () => {
               >
                 <div>
                   {!isMe && (
-                    <p className="text-xs font-bold text-blue-600 mb-1">
+                    <p className="text-xs font-bold text-green-600 mb-1">
                       {msg?.sender?.name}
                     </p>
                   )}
