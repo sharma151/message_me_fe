@@ -4,12 +4,15 @@ import { useChat } from '@/core/hooks/api/useChat'
 import { FaArrowLeft } from 'react-icons/fa'
 import DefaultUserIcon from '@/components/DefaultUserIcon'
 import { RiLoader2Line } from 'react-icons/ri'
+import { useModalStore } from '@/store/modal.store'
+import { MdGroups } from 'react-icons/md'
 
 interface AllUsersListProps {
   onBack?: () => void
 }
 const AllUserList = ({ onBack }: AllUsersListProps) => {
   const { fetchAllUsers, isFetchingAllUsers, createChatRoom } = useChat()
+  const { onCreateGroupOpen } = useModalStore()
 
   const navigate = useNavigate()
   const handleRowClick = ({ chatID }: { chatID: number }) => {
@@ -29,17 +32,31 @@ const AllUserList = ({ onBack }: AllUsersListProps) => {
   }
   return (
     <>
-      <div className="px-2 bg-gray-800 h-full">
-        <div className="flex items-center  gap-1 p-2">
+      <div className="px-2 bg-gray-800 h-full  ">
+        <div className="flex items-center gap-3 p-4 bg-gray-800">
           <button
             onClick={onBack}
-            className="p-2 hover:bg-gray-300 rounded-full transition-colors"
+            className="p-2  hover:bg-gray-300  rounded-full transition-colors text-white"
           >
-            <FaArrowLeft size={16} color="white" />
+            <FaArrowLeft size={16} />
           </button>
-          <h2 className="text-lg font-semibold text-white">All Users</h2>
+          <div className="flex flex-col ">
+            <h3 className="font-semibold text-lg text-white">All Users</h3>
+          </div>
         </div>
-        <div className="space-y-1 overflow-y-auto max-h-96">
+        <div
+          className=" border-gray-200  hover:bg-gray-300 rounded-lg cursor-pointer"
+          onClick={onCreateGroupOpen}
+        >
+          <div className=" p-3 text-white flex items-center gap-4">
+            <DefaultUserIcon Icon={MdGroups}  size={40}/>
+            <span className="font-medium">Create Group</span>
+          </div>
+        </div>
+        <div className="space-y-1 overflow-y-auto max-h-full custom-scrollbar">
+          <p className="px-4 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
+            Users
+          </p>
           {fetchAllUsers ? (
             fetchAllUsers.map((user: UserProfileResponse) => (
               <div
