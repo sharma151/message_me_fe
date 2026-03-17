@@ -102,7 +102,6 @@ const ChatRoomPage = () => {
     msgId: number,
     msgcontent: string,
   ) => {
-    console.log(e.key)
     if (e.key === 'Delete') {
       deleteMessage({ msgId, chatId })
     }
