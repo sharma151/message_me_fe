@@ -102,7 +102,6 @@ const ChatRoomPage = () => {
     msgId: number,
     msgcontent: string,
   ) => {
-    console.log(e.key)
     if (e.key === 'Delete') {
       deleteMessage({ msgId, chatId })
     }
@@ -156,7 +155,7 @@ const ChatRoomPage = () => {
               >
                 <div>
                   {!isMe && (
-                    <p className="text-xs font-bold text-blue-600 mb-1">
+                    <p className="text-xs font-bold text-green-600 mb-1">
                       {msg?.sender?.name}
                     </p>
                   )}

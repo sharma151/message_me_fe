@@ -11,7 +11,6 @@ const CreateGroupChat = () => {
     useChat()
 
   //   const navigate = useNavigate();
-  console.log(fetchAllUsers)
 
   // State for group creation
   const [groupName, setGroupName] = useState('')

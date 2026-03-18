@@ -10,6 +10,7 @@ import { MdGroups } from 'react-icons/md'
 interface AllUsersListProps {
   onBack?: () => void
 }
+
 const AllUserList = ({ onBack }: AllUsersListProps) => {
   const { fetchAllUsers, isFetchingAllUsers, createChatRoom } = useChat()
   const { onCreateGroupOpen } = useModalStore()
@@ -25,55 +26,61 @@ const AllUserList = ({ onBack }: AllUsersListProps) => {
 
   if (isFetchingAllUsers) {
     return (
-      <div className="flex justify-center items-center h-full  bg-gray-800 ">
+      <div className="flex justify-center items-center h-full bg-gray-800">
         <RiLoader2Line size={25} color="gray" className="animate-spin" />
       </div>
     )
   }
+
   return (
-    <>
-      <div className="px-2 bg-gray-800 h-full  ">
-        <div className="flex items-center gap-3 p-4 bg-gray-800">
+    <div className="h-screen w-full flex flex-col bg-gray-800 overflow-hidden font-sans animate-in slide-in-from-right duration-200">
+      {/* --- FIXED HEADER SECTION --- */}
+      <div className="flex-none px-2">
+        <div className="flex items-center gap-3 p-4">
           <button
             onClick={onBack}
-            className="p-2  hover:bg-gray-300  rounded-full transition-colors text-white"
+            className="p-2 hover:bg-gray-700 rounded-full transition-colors text-white"
           >
             <FaArrowLeft size={16} />
           </button>
-          <div className="flex flex-col ">
-            <h3 className="font-semibold text-lg text-white">All Users</h3>
-          </div>
+          <h3 className="font-semibold text-lg text-white">All Users</h3>
         </div>
+
         <div
-          className=" border-gray-200  hover:bg-gray-300 rounded-lg cursor-pointer"
+          className="mx-2 mb-2 border-gray-200 hover:bg-gray-700 rounded-lg cursor-pointer transition-colors"
           onClick={onCreateGroupOpen}
         >
-          <div className=" p-3 text-white flex items-center gap-4">
-            <DefaultUserIcon Icon={MdGroups}  size={40}/>
+          <div className="p-3 text-white flex items-center gap-4">
+            <DefaultUserIcon Icon={MdGroups} size={40} />
             <span className="font-medium">Create Group</span>
           </div>
         </div>
-        <div className="space-y-1 overflow-y-auto max-h-full custom-scrollbar">
-          <p className="px-4 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
-            Users
-          </p>
-          {fetchAllUsers ? (
+      </div>
+
+      {/* --- SCROLLABLE USER LIST --- */}
+      <div className="flex-1 overflow-y-auto px-4 pb-4 custom-scrollbar">
+        <p className="py-2 text-xs font-bold text-gray-400 uppercase tracking-wider sticky top-0 bg-gray-800 z-10">
+          Users
+        </p>
+
+        <div className="space-y-1">
+          {fetchAllUsers && fetchAllUsers.length > 0 ? (
             fetchAllUsers.map((user: UserProfileResponse) => (
               <div
                 key={user.id}
                 onClick={() => handleRowClick({ chatID: user.id })}
-                className=" flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-300 cursor-pointer transition-colors"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors"
               >
                 <DefaultUserIcon />
-                <span className="font-medium text-white">{user.name}</span>{' '}
+                <span className="font-medium text-white">{user.name}</span>
               </div>
             ))
           ) : (
-            <li>No users found.</li>
+            <div className="text-gray-500 p-4">No users found.</div>
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

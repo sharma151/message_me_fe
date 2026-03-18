@@ -5,6 +5,7 @@ import DefaultUserIcon from '@/components/DefaultUserIcon'
 import CustomDropdown from '@/components/CustomDropdown/index'
 import { IoIosArrowDown } from 'react-icons/io'
 import { RiLoader2Line } from 'react-icons/ri'
+import SearchBar from '@/components/SearchBar'
 
 const AvailableUser = () => {
   const { fetchAvailableUsers, isFetchingAvailableUsers } = useChat()
@@ -31,7 +32,10 @@ const AvailableUser = () => {
 
   return (
     <div className="px-2">
-      <h2 className="text-lg font-semibold p-2 text-white">Available user</h2>
+      <SearchBar />
+      <p className="px-4 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
+        Available Users
+      </p>
 
       <div className="space-y-1 overflow-y-auto max-h-96">
         {fetchAvailableUsers?.map((user: AvailableUsersResponse) => {
