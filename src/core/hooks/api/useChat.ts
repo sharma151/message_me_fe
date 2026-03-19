@@ -36,7 +36,7 @@ export const useChat = (chatId?: number) => {
   const createGroupChatMutation = useMutation({
     mutationFn: async (payload: {
       chatName: string
-      receiverUserId: string[]
+      receiverUserId: number[]
     }) => {
       return await ChatService.createGroupChatRoom(payload)
     },

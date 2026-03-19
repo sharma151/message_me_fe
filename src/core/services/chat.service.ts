@@ -3,7 +3,7 @@ import type { AxiosError } from 'axios'
 import httpBase from '@/core/services/httpBase'
 interface CreateGroupChatData {
   chatName: string
-  receiverUserId: string[]
+  receiverUserId: number[]
 }
 
 class ChatService {

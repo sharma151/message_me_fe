@@ -14,10 +14,10 @@ const CreateGroupChat = () => {
 
   // State for group creation
   const [groupName, setGroupName] = useState('')
-  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([])
+  const [selectedUserIds, setSelectedUserIds] = useState<number[]>([])
 
   // Toggle user selection
-  const handleToggleUser = (userId: string) => {
+  const handleToggleUser = (userId: number) => {
     setSelectedUserIds((prev) => {
       if (prev.includes(userId)) {
         return prev.filter((id) => id !== userId) // Uncheck
@@ -93,12 +93,12 @@ const CreateGroupChat = () => {
 
           {Array.isArray(fetchAllUsers) && fetchAllUsers.length > 0 ? (
             fetchAllUsers.map((user) => {
-              const isSelected = selectedUserIds.includes(user.id.toString())
+              const isSelected = selectedUserIds.includes(user.id)
 
               return (
                 <div
                   key={user.id}
-                  onClick={() => handleToggleUser(user.id.toString())}
+                  onClick={() => handleToggleUser(user.id)}
                   className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all ${
                     isSelected ? 'bg-gray-300' : 'hover:bg-gray-300 '
                   }`}
