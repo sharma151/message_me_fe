@@ -19,7 +19,9 @@ import {
 } from '@/components/UI/form'
 
 const loginSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email' }),
+  identifier: z
+    .string()
+    .min(1, { message: 'Please enter your email or username' }),
   password: z.string().min(1, { message: 'Please enter your password' }),
 })
 
@@ -33,11 +35,14 @@ function LoginPage() {
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: '', password: '' },
+    defaultValues: { identifier: '', password: '' },
   })
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    login(values)
+    login({
+      email: values.identifier,
+      password: values.password,
+    })
   }
 
   return (
@@ -57,23 +62,23 @@ function LoginPage() {
           </p>
         </CardHeader>
 
-        <CardContent className="mt-4 px-8 pb-12 sm:px-10">
+        <CardContent className="mt-4 px-8  sm:px-10">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               {/* Email Field */}
               <FormField
                 control={form.control}
-                name="email"
+                name="identifier"
                 render={({ field }) => (
                   <FormItem className="space-y-1.5">
                     <FormLabel className="text-[#8696a0] text-xs uppercase tracking-wider">
-                      Email Address
+                      Username or Email
                     </FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8696a0]" />
                         <Input
-                          placeholder="Email"
+                          placeholder="Enter username or email"
                           className="h-11 border-none bg-[#2a3942] pl-10 text-[#e9edef] placeholder:text-[#8696a0] focus-visible:ring-1 focus-visible:ring-[#00a884]"
                           {...field}
                         />

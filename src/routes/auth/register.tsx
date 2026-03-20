@@ -20,7 +20,7 @@ import {
 
 // Validation Schema
 const registerSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
+  name: z.string().min(3, { message: 'Name must be at least 2 characters' }),
   email: z.string().email({ message: 'Enter a valid email' }),
   password: z
     .string()
@@ -51,9 +51,8 @@ function RegisterForm() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#111b21] px-0 sm:px-4">
       <Card className="h-screen w-full border-none bg-[#202c33] shadow-2xl sm:h-auto sm:max-w-112.5 sm:rounded-lg">
-        
         <div className="flex flex-col items-center ">
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#00a884]">
+          <div className=" flex h-14 w-14 items-center justify-center rounded-full bg-[#00a884]">
             <User className="h-8 w-8 text-white" />
           </div>
         </div>
@@ -66,7 +65,7 @@ function RegisterForm() {
           </p>
         </CardHeader>
 
-        <CardContent className="mt-4 px-8  sm:px-10">
+        <CardContent className=" px-8 sm:px-10">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               {/* Name Field */}
@@ -74,7 +73,7 @@ function RegisterForm() {
                 control={form.control}
                 name="name"
                 render={({ field }) => (
-                  <FormItem className="space-y-1.5">
+                  <FormItem className="space-y-0.5">
                     <FormLabel className="text-[#8696a0] text-xs uppercase tracking-wider">
                       Full Name
                     </FormLabel>
@@ -83,7 +82,7 @@ function RegisterForm() {
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8696a0]" />
                         <Input
                           placeholder="Your name"
-                          className="h-11 border-none bg-[#2a3942] pl-10 text-[#e9edef] placeholder:text-[#8696a0] focus-visible:ring-1 focus-visible:ring-[#00a884]"
+                          className="h-10 border-none bg-[#2a3942] pl-10 text-[#e9edef] placeholder:text-[#8696a0] focus-visible:ring-1 focus-visible:ring-[#00a884]"
                           {...field}
                         />
                       </div>
@@ -98,7 +97,7 @@ function RegisterForm() {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem className="space-y-1.5">
+                  <FormItem className="space-y-0.5">
                     <FormLabel className="text-[#8696a0] text-xs uppercase tracking-wider">
                       Email Address
                     </FormLabel>
@@ -107,7 +106,7 @@ function RegisterForm() {
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8696a0]" />
                         <Input
                           placeholder="Email"
-                          className="h-11 border-none bg-[#2a3942] pl-10 text-[#e9edef] placeholder:text-[#8696a0] focus-visible:ring-1 focus-visible:ring-[#00a884]"
+                          className="h-10 border-none bg-[#2a3942] pl-10 text-[#e9edef] placeholder:text-[#8696a0] focus-visible:ring-1 focus-visible:ring-[#00a884]"
                           {...field}
                         />
                       </div>
@@ -122,7 +121,7 @@ function RegisterForm() {
                 control={form.control}
                 name="password"
                 render={({ field }) => (
-                  <FormItem className="space-y-1.5">
+                  <FormItem className="space-y-0.5">
                     <FormLabel className="text-[#8696a0] text-xs uppercase tracking-wider">
                       Password
                     </FormLabel>
@@ -132,7 +131,7 @@ function RegisterForm() {
                         <Input
                           type={showPassword ? 'text' : 'password'}
                           placeholder="Password"
-                          className="h-11 border-none bg-[#2a3942] pl-10 pr-10 text-[#e9edef] placeholder:text-[#8696a0] focus-visible:ring-1 focus-visible:ring-[#00a884]"
+                          className="h-10 border-none bg-[#2a3942] pl-10 pr-10 text-[#e9edef] placeholder:text-[#8696a0] focus-visible:ring-1 focus-visible:ring-[#00a884]"
                           {...field}
                         />
                         <button
@@ -162,7 +161,7 @@ function RegisterForm() {
                 {isRegistering ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
-                  'GET STARTED'
+                  <span className="text-white">GET STARTED</span>
                 )}
               </Button>
             </form>
