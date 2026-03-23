@@ -1,6 +1,6 @@
 // src/components/layout/AppLayout.tsx
 import ActionBar from '@/components/ActionBar'
-import Sidebar from '@/components/SideBar'
+import Sidebar from '@/features/sidebar/components/SideBar'
 import { socketService } from '@/socket/socket'
 import { useEffect } from 'react'
 // import ActionBar from "@/Components/ActionBar";

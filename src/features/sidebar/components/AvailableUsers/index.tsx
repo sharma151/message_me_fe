@@ -1,11 +1,11 @@
 import type { AvailableUsersResponse } from '@/@types/response/api-response'
 import { useChat } from '@/core/hooks/api/useChat'
 import { useNavigate, useParams } from '@tanstack/react-router'
-import DefaultUserIcon from '@/components/DefaultUserIcon'
+import DefaultUserIcon from '@/features/user/components/DefaultUserIcon'
 import CustomDropdown from '@/components/CustomDropdown/index'
 import { IoIosArrowDown } from 'react-icons/io'
 import { RiLoader2Line } from 'react-icons/ri'
-import SearchBar from '@/components/SearchBar'
+import SearchBar from '@/features/sidebar/components/SearchBar'
 
 const AvailableUser = () => {
   const { fetchAvailableUsers, isFetchingAvailableUsers } = useChat()

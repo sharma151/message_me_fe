@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { PiPlusBold } from 'react-icons/pi'
 import { IoSend } from 'react-icons/io5'
-import { ChatPicker } from '@/components/ChatEmojiPicker/index'
+import { ChatPicker } from '@/features/chat/components/ChatEmojiPicker/index'
 import { socketService } from '@/socket/socket'
 
 interface ChatInputBarProps {

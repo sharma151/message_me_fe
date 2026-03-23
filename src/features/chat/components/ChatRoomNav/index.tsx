@@ -1,5 +1,5 @@
 import { useActiveChat } from '@/core/hooks/common/useActiveChat'
-import DefaultUserIcon from '@/components/DefaultUserIcon'
+import DefaultUserIcon from '@/features/user/components/DefaultUserIcon'
 const ChatRoomNav = () => {
   const { activeChat } = useActiveChat()
   console.log(activeChat)
@@ -17,7 +17,6 @@ const ChatRoomNav = () => {
           {activeChat?.isGroup ? GroupName : activeChat?.receiverName}
         </span>{' '}
       </div>
-      
     </>
   )
 }

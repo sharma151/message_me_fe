@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FaArrowLeft, FaCheck, FaArrowRight, FaCamera } from 'react-icons/fa'
 import { useChat } from '@/core/hooks/api/useChat'
 import { useModalStore } from '@/store/modal.store'
-import DefaultUserIcon from '../DefaultUserIcon'
+import DefaultUserIcon from '@/features/user/components/DefaultUserIcon'
 // import { useNavigate } from "@tanstack/react-router";
 
 const CreateGroupChat = () => {
