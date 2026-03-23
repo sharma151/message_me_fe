@@ -3,6 +3,7 @@ import { FaArrowLeft, FaCheck, FaArrowRight, FaCamera } from 'react-icons/fa'
 import { useChat } from '@/core/hooks/api/useChat'
 import { useModalStore } from '@/store/modal.store'
 import DefaultUserIcon from '@/features/user/components/DefaultUserIcon'
+import { useNavigate } from '@tanstack/react-router'
 // import { useNavigate } from "@tanstack/react-router";
 
 const CreateGroupChat = () => {
@@ -10,7 +11,7 @@ const CreateGroupChat = () => {
   const { createGroupChatMutation, fetchAllUsers, iscreateGroupChatPending } =
     useChat()
 
-  //   const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // State for group creation
   const [groupName, setGroupName] = useState('')
@@ -34,6 +35,9 @@ const CreateGroupChat = () => {
     createGroupChatMutation({
       chatName: groupName.trim(),
       receiverUserId: selectedUserIds,
+    })
+    navigate({
+      to: '/chats',
     })
   }
 
