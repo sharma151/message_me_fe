@@ -7,6 +7,7 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { RiLoader2Line } from 'react-icons/ri'
 import SearchBar from '@/features/sidebar/components/SearchBar'
 import { useEffect, useState } from 'react'
+import { formatChatTimestamp } from '@/utils/helper.utils'
 
 const AvailableUser = () => {
   const {
@@ -80,15 +81,22 @@ const AvailableUser = () => {
                       </span>
                     </div>
                   </div>
+                  <div className="flex flex-col items-end justify-between py-1">
+                    <span className="text-gray-400 text-[10px] whitespace-nowrap">
+                      {user?.lastMessageTime
+                        ? formatChatTimestamp(user?.lastMessageTime)
+                        : ''}
+                    </span>
 
-                  <CustomDropdown
-                    triggerContent={<IoIosArrowDown size={17} color="gray" />}
-                    buttonClassName="opacity-0 group-hover:opacity-100 transition-opacity"
-                    items={[{ key: 'Delete', label: 'Delete' }]}
-                    onMenuClick={(item) => {
-                      if (item.key === 'Delete') alert(`Delete ${user.name}`)
-                    }}
-                  />
+                    <CustomDropdown
+                      triggerContent={<IoIosArrowDown size={17} color="gray" />}
+                      buttonClassName="opacity-0 group-hover:opacity-100 transition-opacity"
+                      items={[{ key: 'Delete', label: 'Delete' }]}
+                      onMenuClick={(item) => {
+                        if (item.key === 'Delete') alert(`Delete ${user.name}`)
+                      }}
+                    />
+                  </div>
                 </div>
               )
             })}

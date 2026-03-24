@@ -49,7 +49,7 @@ class AuthService {
   //Update UserName
   static async updateUserName(username: string) {
     try {
-      const response = await httpBase.post('/users/update-profile', {
+      const response = await httpBase.patch('/users/profile', {
         username,
       })
       return response.data
