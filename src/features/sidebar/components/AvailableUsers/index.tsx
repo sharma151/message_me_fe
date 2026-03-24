@@ -6,9 +6,35 @@ import CustomDropdown from '@/components/CustomDropdown/index'
 import { IoIosArrowDown } from 'react-icons/io'
 import { RiLoader2Line } from 'react-icons/ri'
 import SearchBar from '@/features/sidebar/components/SearchBar'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { formatChatTimestamp } from '@/utils/helper.utils'
+import {
+  Archive,
+  BellOff,
+  Pin,
+  Mail,
+  Heart,
+  List,
+  Ban,
+  MinusCircle,
+  Trash2,
+} from 'lucide-react'
 
+export type DropdownItem =
+  | {
+      key: string
+      label: string
+      icon?: ReactNode
+      className?: string
+      type?: 'item'
+    }
+  | {
+      key: string
+      label: string
+      type: 'separator'
+      icon?: never
+      className?: string
+    }
 const AvailableUser = () => {
   const {
     fetchAvailableUsers,
@@ -39,6 +65,28 @@ const AvailableUser = () => {
       params: { chatId: chatID.toString() },
     })
   }
+
+  const menuItems: DropdownItem[] = [
+    { key: 'archive', label: 'Archive chat', icon: <Archive size={18} /> },
+    { key: 'mute', label: 'Mute notifications', icon: <BellOff size={18} /> },
+    { key: 'pin', label: 'Pin chat', icon: <Pin size={18} /> },
+    { key: 'unread', label: 'Mark as unread', icon: <Mail size={18} /> },
+    { key: 'fav', label: 'Add to favourites', icon: <Heart size={18} /> },
+    { key: 'list', label: 'Add to list', icon: <List size={18} /> },
+    {
+      key: 'sep1',
+      type: 'separator',
+      label: '',
+    },
+    { key: 'block', label: 'Block', icon: <Ban size={18} /> },
+    { key: 'clear', label: 'Clear chat', icon: <MinusCircle size={18} /> },
+    {
+      key: 'delete',
+      label: 'Delete chat',
+      icon: <Trash2 size={18} />,
+      className: 'text-red-500',
+    },
+  ] as const
 
   return (
     <div className="flex flex-col h-full">
@@ -91,7 +139,7 @@ const AvailableUser = () => {
                     <CustomDropdown
                       triggerContent={<IoIosArrowDown size={17} color="gray" />}
                       buttonClassName="opacity-0 group-hover:opacity-100 transition-opacity"
-                      items={[{ key: 'Delete', label: 'Delete' }]}
+                      items={menuItems}
                       onMenuClick={(item) => {
                         if (item.key === 'Delete') alert(`Delete ${user.name}`)
                       }}
