@@ -18,9 +18,11 @@ class ChatService {
   }
 
   //fetchAvailableUsers
-  static async fetchAvailableUsers() {
+  static async fetchAvailableUsers(search?: string) {
     try {
-      const response = await httpBase.get('/users/chat')
+      const response = await httpBase.get('/users/chat/available', {
+        params: {search}
+      })
       return response.data
     } catch (error) {
       throw handleError(error as AxiosError)

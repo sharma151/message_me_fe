@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import ChatService from '@/core/services/chat.service'
+import { useState } from 'react'
 export const useChat = (chatId?: number) => {
   const queryClient = useQueryClient()
+  const [search, setSearch] = useState('') 
+  
   //FetchAllUsers
   const fetchAllUsers = useQuery({
     queryKey: ['AllUsers'],
@@ -9,9 +12,9 @@ export const useChat = (chatId?: number) => {
   })
 
   //FetchAvailableUsers
-  const fetchAvailableUsers = useQuery({
-    queryKey: ['available-users'],
-    queryFn: ChatService.fetchAvailableUsers,
+    const fetchAvailableUsers = useQuery({
+    queryKey: ['available-users', search],
+    queryFn: () => ChatService.fetchAvailableUsers(search),
   })
 
   //Fetch Chats History
@@ -79,6 +82,7 @@ export const useChat = (chatId?: number) => {
     isFetchingAllUsers: fetchAllUsers.isFetching,
     fetchAvailableUsers: fetchAvailableUsers.data,
     isFetchingAvailableUsers: fetchAvailableUsers.isFetching,
+    searchAvailableUsers: setSearch,
     messages: chatMessagesQuery.data || [],
     isLoadingMessages: chatMessagesQuery.isLoading,
     createChatRoom: createChatRoomMutation.mutate,
