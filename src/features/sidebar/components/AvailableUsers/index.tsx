@@ -9,28 +9,28 @@ import SearchBar from '@/features/sidebar/components/SearchBar'
 import { useEffect, useState } from 'react'
 
 const AvailableUser = () => {
-  const { fetchAvailableUsers, isFetchingAvailableUsers, searchAvailableUsers } = useChat()
+  const {
+    fetchAvailableUsers,
+    isFetchingAvailableUsers,
+    searchAvailableUsers,
+  } = useChat()
   const [searchText, setSearchText] = useState('')
-  const [debouncedSearch, setDebouncedSearch] = useState('');
-
-  // debounce effect
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(searchText);
-    }, 500); // 500ms debounce
-
-    return () => clearTimeout(handler);
-  }, [searchText]);
-
-  // trigger API only when debounced value changes
-  useEffect(() => {
-    searchAvailableUsers(debouncedSearch);
-  }, [debouncedSearch, searchAvailableUsers]);
-
-
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const { chatId } = useParams({ strict: false })
   const navigate = useNavigate()
 
-  const { chatId } = useParams({ strict: false })
+  // Handle Debounce Logic
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchText)
+    }, 500)
+    return () => clearTimeout(handler)
+  }, [searchText])
+
+  // Sync with API
+  useEffect(() => {
+    searchAvailableUsers(debouncedSearch)
+  }, [debouncedSearch, searchAvailableUsers])
 
   const handleRowClick = (chatID: number) => {
     navigate({
@@ -39,69 +39,61 @@ const AvailableUser = () => {
     })
   }
 
-  const items = [{ key: 'Delete', label: 'Delete' }]
-
-  if (isFetchingAvailableUsers) {
-    return (
-      <div className="flex justify-center items-center h-full  bg-gray-800 ">
-        <RiLoader2Line size={25} color="gray" className="animate-spin" />
-      </div>
-    )
-  }
-
   return (
-    <div className="">
-      <SearchBar
-        value={searchText}
-        onChange={(val) => setSearchText(val)}
-      />
+    <div className="flex flex-col h-full">
+      <SearchBar value={searchText} onChange={setSearchText} />
+
       <p className="px-4 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
         Available Users
       </p>
 
-      <div className="space-y-1 overflow-y-auto max-h-104 px-2 custom-scrollbar">
-        {fetchAvailableUsers?.map((user: AvailableUsersResponse) => {
-          const isActive = chatId === user.chatId.toString()
-          return (
-            <div
-              key={user.chatId}
-              onClick={(e) => {
-                handleRowClick(user.chatId)
-                e.stopPropagation()
-              }}
-              className={`
-                flex items-center  justify-between space-x-3 p-2 rounded-lg cursor-pointer
-                transition-colors
-                hover:bg-gray-300 group
-                ${isActive ? 'bg-gray-300' : ''}
-              `}
-            >
-              <div className="flex gap-2">
-                <span>
-                  <DefaultUserIcon />
-                </span>
+      <div className="flex-1 overflow-y-auto px-2 max-h-102 custom-scrollbar">
+        {/* Crucial: Don't return early with the loader if we are just searching, 
+           or the SearchBar will disappear and lose focus.
+        */}
+        {isFetchingAvailableUsers && fetchAvailableUsers?.length === 0 ? (
+          <div className="flex justify-center items-center py-10">
+            <RiLoader2Line size={25} color="gray" className="animate-spin" />
+          </div>
+        ) : (
+          <div className="space-y-1">
+            {fetchAvailableUsers?.map((user: AvailableUsersResponse) => {
+              const isActive = chatId === user.chatId.toString()
+              return (
+                <div
+                  key={user.chatId}
+                  onClick={() => handleRowClick(user.chatId)}
+                  className={`
+                    flex items-center justify-between space-x-3 p-2 rounded-lg cursor-pointer
+                    transition-colors hover:bg-gray-300 group
+                    ${isActive ? 'bg-gray-300' : ''}
+                  `}
+                >
+                  <div className="flex gap-2">
+                    <DefaultUserIcon />
+                    <div className="flex flex-col overflow-hidden">
+                      <span className="font-medium text-white truncate">
+                        {user.isGroup ? user.name : user.receiverName}
+                      </span>
+                      <span className="text-sm text-gray-400 truncate max-w-[150px]">
+                        {user.message}
+                      </span>
+                    </div>
+                  </div>
 
-                <div className="flex flex-col overflow-hidden">
-                  <span className="font-medium text-white">
-                    {user.isGroup === false ? user.receiverName : user.name}
-                  </span>
-                  <span className="text-sm text-gray-200 truncate max-w-25">
-                    {user.message}
-                  </span>
+                  <CustomDropdown
+                    triggerContent={<IoIosArrowDown size={17} color="gray" />}
+                    buttonClassName="opacity-0 group-hover:opacity-100 transition-opacity"
+                    items={[{ key: 'Delete', label: 'Delete' }]}
+                    onMenuClick={(item) => {
+                      if (item.key === 'Delete') alert(`Delete ${user.name}`)
+                    }}
+                  />
                 </div>
-              </div>
-
-              <CustomDropdown
-                triggerContent={<IoIosArrowDown size={17} color="gray" />}
-                buttonClassName="opacity-0 group-hover:opacity-100 transition-opacity"
-                items={items}
-                onMenuClick={() => {
-                  alert('Delete clicked for user')
-                }}
-              />
-            </div>
-          )
-        })}
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )
