@@ -50,7 +50,7 @@ const AvailableUser = () => {
   }
 
   return (
-    <div className="px-2">
+    <div className="">
       <SearchBar
         value={searchText}
         onChange={(val) => setSearchText(val)}
@@ -59,7 +59,7 @@ const AvailableUser = () => {
         Available Users
       </p>
 
-      <div className="space-y-1 overflow-y-auto max-h-96">
+      <div className="space-y-1 overflow-y-auto max-h-104 px-2 custom-scrollbar">
         {fetchAvailableUsers?.map((user: AvailableUsersResponse) => {
           const isActive = chatId === user.chatId.toString()
           return (
