@@ -6,9 +6,28 @@ import CustomDropdown from '@/components/CustomDropdown/index'
 import { IoIosArrowDown } from 'react-icons/io'
 import { RiLoader2Line } from 'react-icons/ri'
 import SearchBar from '@/features/sidebar/components/SearchBar'
+import { useEffect, useState } from 'react'
 
 const AvailableUser = () => {
-  const { fetchAvailableUsers, isFetchingAvailableUsers } = useChat()
+  const { fetchAvailableUsers, isFetchingAvailableUsers, searchAvailableUsers } = useChat()
+  const [searchText, setSearchText] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  // debounce effect
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchText);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(handler);
+  }, [searchText]);
+
+  // trigger API only when debounced value changes
+  useEffect(() => {
+    searchAvailableUsers(debouncedSearch);
+  }, [debouncedSearch, searchAvailableUsers]);
+
+
   const navigate = useNavigate()
 
   const { chatId } = useParams({ strict: false })
@@ -32,7 +51,10 @@ const AvailableUser = () => {
 
   return (
     <div className="">
-      <SearchBar />
+      <SearchBar
+        value={searchText}
+        onChange={(val) => setSearchText(val)}
+      />
       <p className="px-4 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
         Available Users
       </p>
