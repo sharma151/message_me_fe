@@ -125,8 +125,10 @@ const ChatRoomPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen   bg-gray-800  bg-doodle-gray">
+    <div className="flex flex-col h-screen  bg-gray-800  bg-doodle-gray">
       <ChatRoomNav />
+
+      
 
       {/* Messages Area */}
       <div

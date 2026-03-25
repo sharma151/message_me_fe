@@ -40,6 +40,7 @@ const AvailableUser = () => {
     fetchAvailableUsers,
     isFetchingAvailableUsers,
     searchAvailableUsers,
+    archieveChat,
   } = useChat()
   const [searchText, setSearchText] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
@@ -141,7 +142,9 @@ const AvailableUser = () => {
                       buttonClassName="opacity-0 group-hover:opacity-100 transition-opacity"
                       items={menuItems}
                       onMenuClick={(item) => {
-                        if (item.key === 'Delete') alert(`Delete ${user.name}`)
+                        if (item.key === 'archive' && user?.chatId) {
+                          archieveChat({ chatId: user.chatId })
+                        }
                       }}
                     />
                   </div>
