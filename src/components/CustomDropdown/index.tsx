@@ -52,7 +52,7 @@ const CustomDropdown: React.FC<ReusableDropdownProps> = ({
         side={placement}
         align={align}
         className={twMerge(
-          'bg-gray-800 border-none min-w-[160px] rounded-lg py-1 shadow-2xl z-50',
+          'bg-gray-800 border-gray-500 border min-w-40 rounded-lg py-1 shadow-2xl z-50',
           menuClassName,
         )}
       >
@@ -89,7 +89,7 @@ const CustomDropdown: React.FC<ReusableDropdownProps> = ({
               {item.icon && (
                 <span
                   className={twMerge(
-                    'flex-shrink-0 scale-90  focus:text-white transition-colors',
+                    'shrink-0 scale-90  focus:text-white transition-colors',
                     // Use !important to prevent the base component from turning the icon black
                     isDelete ? 'text-red-500!' : 'text-white!',
                   )}
