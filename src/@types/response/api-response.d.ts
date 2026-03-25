@@ -15,4 +15,5 @@ export interface AvailableUsersResponse {
   receiverId: null | number
   receiverName: null | string
   message: null | string
+  lastMessageTime: string
 }

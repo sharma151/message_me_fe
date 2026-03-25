@@ -1,5 +1,5 @@
 import { useModalStore } from '@/store/modal.store'
-import DefaultUserIcon from '@/components/DefaultUserIcon'
+import DefaultUserIcon from '@/features/user/components/DefaultUserIcon'
 
 const UserDetailActionButton = () => {
   const { onUserDetailOpen } = useModalStore()

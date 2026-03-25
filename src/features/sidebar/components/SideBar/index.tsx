@@ -1,7 +1,7 @@
-import SideBarNav from '@/components/SideBarNav'
+import SideBarNav from '@/features/sidebar/components/SideBarNav'
 import { useModalStore } from '@/store/modal.store'
-import AvailableUser from '@/components/AvailableUsers/index'
-import UserDetailCard from '@/components/UserProfileDetails/index'
+import AvailableUser from '@/features/sidebar/components/AvailableUsers/index'
+import UserDetailCard from '@/features/user/components/UserProfileDetails/index'
 import Users from '@/components/Users'
 
 const SideBar = () => {

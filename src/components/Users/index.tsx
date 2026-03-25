@@ -1,5 +1,5 @@
-import CreateGroupChat from '@/components/CreateGroupChat/index'
-import AllUsersList from '@/components/AllUserList'
+import CreateGroupChat from '@/features/sidebar/components/CreateGroupChat'
+import AllUsersList from '@/features/sidebar/components/AllUserList'
 import { useModalStore } from '@/store/modal.store'
 
 const Users = () => {

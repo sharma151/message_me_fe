@@ -1,7 +1,7 @@
 import { HiOutlinePencilAlt } from 'react-icons/hi'
 import { FaArrowLeft } from 'react-icons/fa'
 import { useAuth } from '@/core/hooks/api/useAuth'
-import DefaultUserIcon from '@/components/DefaultUserIcon'
+import DefaultUserIcon from '@/features/user/components/DefaultUserIcon'
 import { useRef, useState } from 'react'
 import { BsCheckLg } from 'react-icons/bs'
 import { MdClose } from 'react-icons/md'
@@ -58,7 +58,7 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
         </div>
 
         {/* Avatar */}
-        
+
         <div className="flex flex-col items-center my-8 relative">
           <div className="relative group mb-4">
             <div className="w-48 h-48 rounded-full overflow-hidden border-none bg-gray-800">

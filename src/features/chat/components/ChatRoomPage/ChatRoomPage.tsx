@@ -2,12 +2,12 @@ import { useEffect, useState, useRef } from 'react'
 import { useParams } from '@tanstack/react-router'
 import { socketService } from '@/socket/socket'
 import { useAuthStore } from '@/store/auth.store'
-import ChatRoomNav from '@/components/ChatRoomNav/index'
+import ChatRoomNav from '@/features/chat/components/ChatRoomNav/index'
 import { useChat } from '@/core/hooks/api/useChat'
 import { RiLoader2Line } from 'react-icons/ri'
 import CustomDropdown, { type DropdownItem } from '@/components/CustomDropdown'
 import { FaAngleDown } from 'react-icons/fa'
-import ChatInputBar from '@/components/ChatInputBar'
+import ChatInputBar from '@/features/chat/components/ChatInputBar'
 import { BsCheckLg } from 'react-icons/bs'
 import { MdClose } from 'react-icons/md'
 
@@ -110,7 +110,7 @@ const ChatRoomPage = () => {
       setEditingMessageId(msgId)
     }
   }
-6
+  6
   const handleEditMsgSave = () => {
     if (!editingMessageId || !tempMsg.trim()) return
 

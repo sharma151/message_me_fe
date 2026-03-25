@@ -1,4 +1,4 @@
-import UserDetailActionButton from '@/components/UserDetailActionbutton'
+import UserDetailActionButton from '@/features/user/components/UserDetailActionbutton'
 import ChatIcon from '@/assets/chatIcon.png'
 
 const ActionBar = () => {
