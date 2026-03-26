@@ -3,13 +3,20 @@ import { useActiveChat } from '@/core/hooks/common/useActiveChat'
 import DefaultUserIcon from '@/features/user/components/DefaultUserIcon'
 import { LuInfo } from 'react-icons/lu'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { useModalStore } from '@/store/modal.store'
 const ChatRoomNav = () => {
   const { activeChat } = useActiveChat()
   console.log(activeChat)
   const GroupName = activeChat?.name
   const items = [
-    { key: 'Contact info', label: 'Contact info', icon: <LuInfo size={16} /> },
+    { key: 'contact_info', label: 'Contact info', icon: <LuInfo size={16} /> },
   ]
+  const { onContactInfoOpen } = useModalStore()
+  const handleMenuClick = (item: any) => {
+    if (item.key === 'contact_info') {
+      onContactInfoOpen()
+    }
+  }
   return (
     <>
       <div
@@ -28,7 +35,7 @@ const ChatRoomNav = () => {
         <CustomDropdown
           items={items}
           triggerContent={<BsThreeDotsVertical size={20} color="white" />}
-          onMenuClick={() => {}}
+          onMenuClick={handleMenuClick}
           buttonClassName="p-1.5 rounded-full hover:bg-gray-300"
         />
       </div>
