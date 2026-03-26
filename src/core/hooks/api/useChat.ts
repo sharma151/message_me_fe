@@ -3,8 +3,8 @@ import ChatService from '@/core/services/chat.service'
 import { useState } from 'react'
 export const useChat = (chatId?: number) => {
   const queryClient = useQueryClient()
-  const [search, setSearch] = useState('') 
-  
+  const [search, setSearch] = useState('')
+
   //FetchAllUsers
   const fetchAllUsers = useQuery({
     queryKey: ['AllUsers'],
@@ -12,7 +12,7 @@ export const useChat = (chatId?: number) => {
   })
 
   //FetchAvailableUsers
-    const fetchAvailableUsers = useQuery({
+  const fetchAvailableUsers = useQuery({
     queryKey: ['available-users', search],
     queryFn: () => ChatService.fetchAvailableUsers(search),
   })
@@ -77,6 +77,23 @@ export const useChat = (chatId?: number) => {
     },
   })
 
+  const archieveChat = useMutation({
+    mutationFn: ({ chatId }: { chatId: number }) => {
+      return ChatService.archieveChat(chatId)
+    },
+    onSuccess: () => {
+      fetchAvailableUsers.refetch()
+    },
+  })
+
+  const unarchieveChat = useMutation({
+    mutationFn: ({ chatId }: { chatId: number }) => {
+      return ChatService.unarchieveChat(chatId)
+    },
+    onSuccess: () => {
+      fetchAvailableUsers.refetch()
+    },
+  })
   return {
     fetchAllUsers: fetchAllUsers.data,
     isFetchingAllUsers: fetchAllUsers.isFetching,
@@ -92,5 +109,7 @@ export const useChat = (chatId?: number) => {
     queryClient,
     deleteMessage: deleteMessage.mutate,
     editMessage: editMessage.mutate,
+    archieveChat: archieveChat.mutate,
+    unarchievechat: unarchieveChat.mutate,
   }
 }

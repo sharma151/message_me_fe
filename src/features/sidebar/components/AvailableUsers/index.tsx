@@ -40,6 +40,7 @@ const AvailableUser = () => {
     fetchAvailableUsers,
     isFetchingAvailableUsers,
     searchAvailableUsers,
+    archieveChat,
   } = useChat()
   const [searchText, setSearchText] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
@@ -124,13 +125,13 @@ const AvailableUser = () => {
                       <span className="font-medium text-white truncate">
                         {user.isGroup ? user.name : user.receiverName}
                       </span>
-                      <span className="text-sm text-gray-400 truncate max-w-[150px]">
+                      <span className="text-sm text-gray-400 truncate max-w-37.5">
                         {user.message}
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col items-end justify-between py-1">
-                    <span className="text-gray-400 text-[10px] whitespace-nowrap">
+                    <span className="text-gray-400 text-xs whitespace-nowrap">
                       {user?.lastMessageTime
                         ? formatChatTimestamp(user?.lastMessageTime)
                         : ''}
@@ -141,7 +142,9 @@ const AvailableUser = () => {
                       buttonClassName="opacity-0 group-hover:opacity-100 transition-opacity"
                       items={menuItems}
                       onMenuClick={(item) => {
-                        if (item.key === 'Delete') alert(`Delete ${user.name}`)
+                        if (item.key === 'archive' && user?.chatId) {
+                          archieveChat({ chatId: user.chatId })
+                        }
                       }}
                     />
                   </div>

@@ -21,7 +21,7 @@ class ChatService {
   static async fetchAvailableUsers(search?: string) {
     try {
       const response = await httpBase.get('/users/chat/available', {
-        params: {search}
+        params: { search },
       })
       return response.data
     } catch (error) {
@@ -77,6 +77,23 @@ class ChatService {
       const response = await httpBase.patch(`/chat/${msgId}/${chatId}`, {
         content,
       })
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+
+  static async archieveChat(chatId: number) {
+    try {
+      const response = await httpBase.patch(`/chat/${chatId}/archive`)
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+  static async unarchieveChat(chatId: number) {
+    try {
+      const response = await httpBase.patch(`/chat/${chatId}/unarchive`)
       return response.data
     } catch (error) {
       throw handleError(error as AxiosError)
