@@ -7,7 +7,7 @@ import { useNavigate } from '@tanstack/react-router'
 // import { useNavigate } from "@tanstack/react-router";
 
 const CreateGroupChat = () => {
-  const { onCreateGroupClose } = useModalStore()
+  const { onCreateGroupClose, onClose } = useModalStore()
   const { createGroupChatMutation, fetchAllUsers, iscreateGroupChatPending } =
     useChat()
 
@@ -36,6 +36,8 @@ const CreateGroupChat = () => {
       chatName: groupName.trim(),
       receiverUserId: selectedUserIds,
     })
+    onCreateGroupClose?.()
+    onClose?.()
     navigate({
       to: '/chats',
     })
