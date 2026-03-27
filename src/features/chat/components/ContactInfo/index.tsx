@@ -117,9 +117,10 @@ const ContactInfo = () => {
         )}
 
         {/* ACTION */}
-        <div className="p-4 border-t border-gray-700 mt-4">
+        <div className="p-4 border-gray-700 mt-4">
           <button className="w-full text-red-500 text-sm hover:bg-gray-800 p-2 rounded">
-            {chat.isGroup ? 'Exit group' : 'Block contact'}
+            {chat.isGroup ? 'Exit group' : ''}
+            {/* {chat.isGroup ? 'Exit group' : 'Block contact'} */}
           </button>
         </div>
       </div>
