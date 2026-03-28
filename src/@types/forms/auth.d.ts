@@ -27,6 +27,11 @@ export interface AuthResponse {
 }
 
 export interface UserProfileResponse {
+  chatId: Key | null | undefined
+  isGroup: any
+  receiverName: ReactNode
+  message: string
+  lastMessageTime: any
   id: number
   name: string
   email: string

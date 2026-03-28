@@ -29,6 +29,15 @@ class ChatService {
     }
   }
 
+  static async fetchArchivedUsers() {
+    try {
+      const response = await httpBase.get('/chat/archived')
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+
   //fetch chats messages
   static async fetchChats(chatId: number) {
     try {
