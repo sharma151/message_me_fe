@@ -11,6 +11,12 @@ export const useChat = (chatId?: number) => {
     queryFn: ChatService.fetchAllUsers,
   })
 
+  //fetch Archived Users
+  const fetchArchivedUsers = useQuery({
+    queryKey: ['ArchivedUsers'],
+    queryFn: ChatService.fetchArchivedUsers,
+  })
+
   //FetchAvailableUsers
   const fetchAvailableUsers = useQuery({
     queryKey: ['available-users', search],
@@ -77,6 +83,7 @@ export const useChat = (chatId?: number) => {
     },
   })
 
+  //Archieve Chat
   const archieveChat = useMutation({
     mutationFn: ({ chatId }: { chatId: number }) => {
       return ChatService.archieveChat(chatId)
@@ -86,19 +93,24 @@ export const useChat = (chatId?: number) => {
     },
   })
 
+  //Unarchieve Chat
   const unarchieveChat = useMutation({
     mutationFn: ({ chatId }: { chatId: number }) => {
       return ChatService.unarchieveChat(chatId)
     },
     onSuccess: () => {
+      fetchArchivedUsers.refetch()
       fetchAvailableUsers.refetch()
     },
   })
+
   return {
     fetchAllUsers: fetchAllUsers.data,
     isFetchingAllUsers: fetchAllUsers.isFetching,
     fetchAvailableUsers: fetchAvailableUsers.data,
     isFetchingAvailableUsers: fetchAvailableUsers.isFetching,
+    fetchArchivedUsers: fetchArchivedUsers.data,
+    isFetchingArchivedUsers: fetchArchivedUsers.isFetching,
     searchAvailableUsers: setSearch,
     messages: chatMessagesQuery.data || [],
     isLoadingMessages: chatMessagesQuery.isLoading,

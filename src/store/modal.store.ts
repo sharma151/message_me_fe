@@ -13,6 +13,9 @@ interface ModalState {
   onUserDetailClose: () => void
   onContactInfoOpen: () => void
   onContactInfoClose: () => void
+  isArchievedUserListOpen: boolean
+  onArchievedUserListOpen: () => void
+  onArchievedUserListClose: () => void
 }
 
 //need to be refactored in future temp solution
@@ -29,4 +32,7 @@ export const useModalStore = create<ModalState>((set) => ({
   isContactInfoOpen: false,
   onContactInfoOpen: () => set({ isContactInfoOpen: true }),
   onContactInfoClose: () => set({ isContactInfoOpen: false }),
+  isArchievedUserListOpen: false,
+  onArchievedUserListOpen: () => set({ isArchievedUserListOpen: true }),
+  onArchievedUserListClose: () => set({ isArchievedUserListOpen: false }),
 }))
