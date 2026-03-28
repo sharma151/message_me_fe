@@ -6,7 +6,6 @@ import { BsThreeDotsVertical } from 'react-icons/bs'
 import { useModalStore } from '@/store/modal.store'
 const ChatRoomNav = () => {
   const { activeChat } = useActiveChat()
-  console.log(activeChat)
   const GroupName = activeChat?.name
   const items = [
     { key: 'contact_info', label: 'Contact info', icon: <LuInfo size={16} /> },

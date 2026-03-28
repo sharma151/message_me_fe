@@ -135,7 +135,7 @@ class ChatService {
   static async removeUserFromGroupChat(chatId: number, userId: number) {
     try {
       const response = await httpBase.delete(
-        `/chat/${chatId}/members/${userId}`,
+        `/chat/group/${chatId}/members/${userId}`,
       )
       return response.data
     } catch (error) {

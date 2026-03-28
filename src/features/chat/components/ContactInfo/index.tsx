@@ -3,31 +3,25 @@ import { useActiveChat } from '@/core/hooks/common/useActiveChat'
 import { useModalStore } from '@/store/modal.store'
 import { FaArrowLeft, FaUserPlus } from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
+import { useParams } from '@tanstack/react-router'
+import { useChat } from '@/core/hooks/api/useChat'
 
 const ContactInfo = () => {
   const onContactInfoClose = useModalStore((state) => state.onContactInfoClose)
   const { activeChat } = useActiveChat()
+  const { chatId } = useParams({ strict: false })
+  const { addUserToGroupChat, removeUserFromGroupChat } = useChat()
 
   //  TEMP DATA need to replace to actual data
-  const chat = activeChat || {
-    isGroup: true,
-    name: 'Dev Team',
-    receiverName: 'John Doe',
-    about: 'Group for dev discussions',
-    participants: [
-      { userId: 1, user: { id: 1, name: 'Saurav sharma' } },
-      { userId: 2, user: { id: 2, name: 'kishor' } },
-      { userId: 3, user: { id: 3, name: 'ram' } },
-      { userId: 4, user: { id: 4, name: 'shyam' } },
-    ],
-  }
-
+  const chat = activeChat
   const handleAddParticipant = () => {
     console.log('Add participant clicked')
+    // For demo, we are adding user with ID 2. In real scenario, you would show a user selection modal.
+    addUserToGroupChat({ chatId: Number(chatId), userId: 2 })
   }
 
   const handleRemoveParticipant = (userId: number) => {
-    console.log('Remove user:', userId)
+    removeUserFromGroupChat({ chatId: Number(chatId), userId })
   }
 
   return (
