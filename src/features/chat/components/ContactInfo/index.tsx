@@ -5,20 +5,25 @@ import { FaArrowLeft, FaUserPlus } from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
 import { useParams } from '@tanstack/react-router'
 import { useChat } from '@/core/hooks/api/useChat'
+import { useState } from 'react'
+import UserSelectionDialog from '@/components/UserSelectionDialog'
 
 const ContactInfo = () => {
   const onContactInfoClose = useModalStore((state) => state.onContactInfoClose)
   const { activeChat } = useActiveChat()
   const { chatId } = useParams({ strict: false })
   const { addUserToGroupChat, removeUserFromGroupChat } = useChat()
+  const [isAddUserOpen, setIsAddUserOpen] = useState(false)
+  const chat = activeChat
 
   //  TEMP DATA need to replace to actual data
-  const chat = activeChat
-  const handleAddParticipant = () => {
-    console.log('Add participant clicked')
-    // For demo, we are adding user with ID 2. In real scenario, you would show a user selection modal.
-    addUserToGroupChat({ chatId: Number(chatId), userId: 2 })
-  }
+  const availableUsers = [
+    { id: 2, name: 'John Doe', email: 'john@example.com' },
+    { id: 3, name: 'Saurav Sharma', email: 'saurav@example.com' },
+  ]
+  // const handleSelectUser = (userId: number) => {
+  //   addUserToGroupChat({ chatId: Number(chatId), userId })
+  // }
 
   const handleRemoveParticipant = (userId: number) => {
     removeUserFromGroupChat({ chatId: Number(chatId), userId })
@@ -64,7 +69,7 @@ const ContactInfo = () => {
         {chat.isGroup && (
           <div className="p-4 border-b border-gray-700">
             <button
-              onClick={handleAddParticipant}
+              onClick={() => setIsAddUserOpen(true)}
               className="flex items-center gap-2 text-green-400 hover:bg-gray-800 p-2 rounded w-full"
             >
               <FaUserPlus size={16} />
@@ -118,6 +123,16 @@ const ContactInfo = () => {
           </button>
         </div>
       </div>
+      <UserSelectionDialog
+        isOpen={isAddUserOpen}
+        onClose={() => setIsAddUserOpen(false)}
+        onAddMembers={(ids) => {
+          ids.forEach((userId) =>
+            addUserToGroupChat({ chatId: Number(chatId), userId }),
+          )
+        }}
+        users={availableUsers}
+      />
     </div>
   )
 }
