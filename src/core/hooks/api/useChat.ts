@@ -23,12 +23,21 @@ export const useChat = (chatId?: number) => {
     queryFn: () => ChatService.fetchAvailableUsers(search),
   })
 
-  //Fetch Chats History
+  //Fetch Chats Messages
   const chatMessagesQuery = useQuery({
     queryKey: ['chats', chatId],
     queryFn: () => ChatService.fetchChats(chatId!),
     enabled: !!chatId,
     staleTime: 1000 * 60 * 5,
+  })
+
+  //Delete Message
+  const deleteChat = useMutation({
+    mutationFn: ({ chatId }: { chatId: number }) =>
+      ChatService.deleteChat(chatId),
+    onSuccess: () => {
+      fetchAvailableUsers.refetch()
+    },
   })
 
   //create Chat Room
@@ -104,6 +113,26 @@ export const useChat = (chatId?: number) => {
     },
   })
 
+  //Add User to Group Chat
+  const addUserToGroupChat = useMutation({
+    mutationFn: ({ chatId, userId }: { chatId: number; userId: number }) => {
+      return ChatService.addUserToGroupChat(chatId, userId)
+    },
+    onSuccess: () => {
+      chatMessagesQuery.refetch()
+    },
+  })
+
+  //Remove User from Group Chat
+  const removeUserFromGroupChat = useMutation({
+    mutationFn: ({ chatId, userId }: { chatId: number; userId: number }) => {
+      return ChatService.removeUserFromGroupChat(chatId, userId)
+    },
+    onSuccess: () => {
+      chatMessagesQuery.refetch()
+    },
+  })
+
   return {
     fetchAllUsers: fetchAllUsers.data,
     isFetchingAllUsers: fetchAllUsers.isFetching,
@@ -121,7 +150,10 @@ export const useChat = (chatId?: number) => {
     queryClient,
     deleteMessage: deleteMessage.mutate,
     editMessage: editMessage.mutate,
+    deleteChat: deleteChat.mutate,
     archieveChat: archieveChat.mutate,
     unarchievechat: unarchieveChat.mutate,
+    addUserToGroupChat: addUserToGroupChat.mutate,
+    removeUserFromGroupChat: removeUserFromGroupChat.mutate,
   }
 }

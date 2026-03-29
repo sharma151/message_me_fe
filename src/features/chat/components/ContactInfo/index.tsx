@@ -3,31 +3,30 @@ import { useActiveChat } from '@/core/hooks/common/useActiveChat'
 import { useModalStore } from '@/store/modal.store'
 import { FaArrowLeft, FaUserPlus } from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
+import { useParams } from '@tanstack/react-router'
+import { useChat } from '@/core/hooks/api/useChat'
+import { useState } from 'react'
+import UserSelectionDialog from '@/components/UserSelectionDialog'
 
 const ContactInfo = () => {
   const onContactInfoClose = useModalStore((state) => state.onContactInfoClose)
   const { activeChat } = useActiveChat()
+  const { chatId } = useParams({ strict: false })
+  const { addUserToGroupChat, removeUserFromGroupChat } = useChat()
+  const [isAddUserOpen, setIsAddUserOpen] = useState(false)
+  const chat = activeChat
 
   //  TEMP DATA need to replace to actual data
-  const chat = activeChat || {
-    isGroup: true,
-    name: 'Dev Team',
-    receiverName: 'John Doe',
-    about: 'Group for dev discussions',
-    participants: [
-      { userId: 1, user: { id: 1, name: 'Saurav sharma' } },
-      { userId: 2, user: { id: 2, name: 'kishor' } },
-      { userId: 3, user: { id: 3, name: 'ram' } },
-      { userId: 4, user: { id: 4, name: 'shyam' } },
-    ],
-  }
-
-  const handleAddParticipant = () => {
-    console.log('Add participant clicked')
-  }
+  const availableUsers = [
+    { id: 2, name: 'John Doe', email: 'john@example.com' },
+    { id: 3, name: 'Saurav Sharma', email: 'saurav@example.com' },
+  ]
+  // const handleSelectUser = (userId: number) => {
+  //   addUserToGroupChat({ chatId: Number(chatId), userId })
+  // }
 
   const handleRemoveParticipant = (userId: number) => {
-    console.log('Remove user:', userId)
+    removeUserFromGroupChat({ chatId: Number(chatId), userId })
   }
 
   return (
@@ -70,7 +69,7 @@ const ContactInfo = () => {
         {chat.isGroup && (
           <div className="p-4 border-b border-gray-700">
             <button
-              onClick={handleAddParticipant}
+              onClick={() => setIsAddUserOpen(true)}
               className="flex items-center gap-2 text-green-400 hover:bg-gray-800 p-2 rounded w-full"
             >
               <FaUserPlus size={16} />
@@ -124,6 +123,16 @@ const ContactInfo = () => {
           </button>
         </div>
       </div>
+      <UserSelectionDialog
+        isOpen={isAddUserOpen}
+        onClose={() => setIsAddUserOpen(false)}
+        onAddMembers={(ids) => {
+          ids.forEach((userId) =>
+            addUserToGroupChat({ chatId: Number(chatId), userId }),
+          )
+        }}
+        users={availableUsers}
+      />
     </div>
   )
 }
