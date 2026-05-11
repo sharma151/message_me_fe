@@ -16,15 +16,6 @@ const ContactInfo = () => {
   const [isAddUserOpen, setIsAddUserOpen] = useState(false)
   const chat = activeChat
 
-  //  TEMP DATA need to replace to actual data
-  const availableUsers = [
-    { id: 2, name: 'John Doe', email: 'john@example.com' },
-    { id: 3, name: 'Saurav Sharma', email: 'saurav@example.com' },
-  ]
-  // const handleSelectUser = (userId: number) => {
-  //   addUserToGroupChat({ chatId: Number(chatId), userId })
-  // }
-
   const handleRemoveParticipant = (userId: number) => {
     removeUserFromGroupChat({ chatId: Number(chatId), userId })
   }
@@ -127,11 +118,11 @@ const ContactInfo = () => {
         isOpen={isAddUserOpen}
         onClose={() => setIsAddUserOpen(false)}
         onAddMembers={(ids) => {
+          console.log('Selected user IDs to add:', ids)
           ids.forEach((userId) =>
             addUserToGroupChat({ chatId: Number(chatId), userId }),
           )
         }}
-        users={availableUsers}
       />
     </div>
   )
