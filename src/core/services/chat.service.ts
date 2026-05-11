@@ -47,6 +47,15 @@ class ChatService {
       throw handleError(error as AxiosError)
     }
   }
+  //Delete Chat
+  static async deleteChat(chatId: number) {
+    try {
+      const response = await httpBase.delete(`/chat/${chatId}`)
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
 
   //create Chat Room
   static async createChatRoom(receiverUserId: number) {
@@ -92,6 +101,7 @@ class ChatService {
     }
   }
 
+  //Archieve Chat
   static async archieveChat(chatId: number) {
     try {
       const response = await httpBase.patch(`/chat/${chatId}/archive`)
@@ -100,9 +110,33 @@ class ChatService {
       throw handleError(error as AxiosError)
     }
   }
+  //Unarchieve Chat
   static async unarchieveChat(chatId: number) {
     try {
       const response = await httpBase.patch(`/chat/${chatId}/unarchive`)
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+  //Add User to Group Chat
+  static async addUserToGroupChat(chatId: number, userId: number) {
+    try {
+      const response = await httpBase.post(`/chat/${chatId}/members`, {
+        userId,
+      })
+      return response.data
+    } catch (error) {
+      throw handleError(error as AxiosError)
+    }
+  }
+
+  //Remove User from Group Chat
+  static async removeUserFromGroupChat(chatId: number, userId: number) {
+    try {
+      const response = await httpBase.delete(
+        `/chat/group/${chatId}/members/${userId}`,
+      )
       return response.data
     } catch (error) {
       throw handleError(error as AxiosError)
