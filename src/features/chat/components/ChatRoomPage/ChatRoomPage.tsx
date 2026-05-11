@@ -133,7 +133,7 @@ const ChatRoomPage = () => {
       {/* LEFT → CHAT */}
       <div
         className={`flex flex-col transition-all duration-300 ${
-          isContactInfoOpen ? 'w-[70%]' : 'w-full'
+          isContactInfoOpen ? 'w-[60%]' : 'w-full'
         }`}
       >
         <ChatRoomNav />

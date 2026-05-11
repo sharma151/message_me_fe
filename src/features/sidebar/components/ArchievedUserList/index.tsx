@@ -5,11 +5,11 @@ import { RiLoader2Line } from 'react-icons/ri'
 import { IoIosArrowDown } from 'react-icons/io'
 import { MdUnarchive } from 'react-icons/md' // Better icon for unarchiving
 import DefaultUserIcon from '@/features/user/components/DefaultUserIcon'
-import CustomDropdown from '@/components/CustomDropdown/index'
+import CustomDropdown, {
+  type DropdownItem,
+} from '@/components/CustomDropdown/index'
 import { formatChatTimestamp } from '@/utils/helper.utils'
-
 import type { UserProfileResponse } from '@/@types/forms/auth'
-import type { DropdownItem } from '../AvailableUsers'
 
 interface AllUsersListProps {
   onBack?: () => void
