@@ -1,31 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import ChatService from '@/core/services/chat.service'
-import { useState } from 'react'
+import { QueryKeys } from '@/config/query-keys'
 export const useChat = (chatId?: number) => {
   const queryClient = useQueryClient()
-  const [search, setSearch] = useState('')
-
-  //FetchAllUsers
-  const fetchAllUsers = useQuery({
-    queryKey: ['AllUsers'],
-    queryFn: ChatService.fetchAllUsers,
-  })
 
   //fetch Archived Users
   const fetchArchivedUsers = useQuery({
-    queryKey: ['ArchivedUsers'],
+    queryKey: [QueryKeys.ARCHIVED_USERS],
     queryFn: ChatService.fetchArchivedUsers,
-  })
-
-  //FetchAvailableUsers
-  const fetchAvailableUsers = useQuery({
-    queryKey: ['available-users', search],
-    queryFn: () => ChatService.fetchAvailableUsers(search),
   })
 
   //Fetch Chats Messages
   const chatMessagesQuery = useQuery({
-    queryKey: ['chats', chatId],
+    queryKey: [QueryKeys.CHATS, chatId],
     queryFn: () => ChatService.fetchChats(chatId!),
     enabled: !!chatId,
     staleTime: 1000 * 60 * 5,
@@ -36,7 +23,7 @@ export const useChat = (chatId?: number) => {
     mutationFn: ({ chatId }: { chatId: number }) =>
       ChatService.deleteChat(chatId),
     onSuccess: () => {
-      fetchAvailableUsers.refetch()
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.AVAILABLE_USERS] })
     },
   })
 
@@ -46,7 +33,7 @@ export const useChat = (chatId?: number) => {
       await ChatService.createChatRoom(receiverUserId)
     },
     onSuccess: () => {
-      fetchAvailableUsers.refetch()
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.AVAILABLE_USERS] })
     },
   })
 
@@ -59,7 +46,7 @@ export const useChat = (chatId?: number) => {
       return await ChatService.createGroupChatRoom(payload)
     },
     onSuccess: () => {
-      fetchAvailableUsers.refetch()
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.AVAILABLE_USERS] })
     },
     onError: (error) => {
       console.error('Group creation failed:', error)
@@ -98,7 +85,7 @@ export const useChat = (chatId?: number) => {
       return ChatService.archieveChat(chatId)
     },
     onSuccess: () => {
-      fetchAvailableUsers.refetch()
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.AVAILABLE_USERS] })
     },
   })
 
@@ -108,8 +95,8 @@ export const useChat = (chatId?: number) => {
       return ChatService.unarchieveChat(chatId)
     },
     onSuccess: () => {
-      fetchArchivedUsers.refetch()
-      fetchAvailableUsers.refetch()
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.ARCHIVED_USERS] })
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.AVAILABLE_USERS] })
     },
   })
 
@@ -134,13 +121,8 @@ export const useChat = (chatId?: number) => {
   })
 
   return {
-    fetchAllUsers: fetchAllUsers.data,
-    isFetchingAllUsers: fetchAllUsers.isFetching,
-    fetchAvailableUsers: fetchAvailableUsers.data,
-    isFetchingAvailableUsers: fetchAvailableUsers.isFetching,
     fetchArchivedUsers: fetchArchivedUsers.data,
     isFetchingArchivedUsers: fetchArchivedUsers.isFetching,
-    searchAvailableUsers: setSearch,
     messages: chatMessagesQuery.data || [],
     isLoadingMessages: chatMessagesQuery.isLoading,
     createChatRoom: createChatRoomMutation.mutate,
