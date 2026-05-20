@@ -8,9 +8,11 @@ interface CreateGroupChatData {
 
 class ChatService {
   // fetchAllUsers
-  static async fetchAllUsers() {
+  static async fetchAllUsers(search?: string) {
     try {
-      const response = await httpBase.get('/users')
+      const response = await httpBase.get('/users', {
+        params: { search },
+      })
       return response.data
     } catch (error) {
       throw handleError(error as AxiosError)
@@ -122,7 +124,7 @@ class ChatService {
   //Add User to Group Chat
   static async addUserToGroupChat(chatId: number, userId: number) {
     try {
-      const response = await httpBase.post(`/chat/${chatId}/members`, {
+      const response = await httpBase.post(`/chat/group/${chatId}/members`, {
         userId,
       })
       return response.data
